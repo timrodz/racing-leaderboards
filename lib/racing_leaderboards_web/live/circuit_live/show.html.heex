@@ -1,0 +1,38 @@
+<.header>
+  Circuit <%= @circuit.id %>
+  <:subtitle>This is a circuit record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/circuits/#{@circuit}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit circuit</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Country">
+    <%= @circuit.country %> <%= RacingLeaderboardsWeb.Utils.Circuits.country_to_emoji(
+      @circuit.country
+    ) %>
+  </:item>
+  <:item title="Region"><%= @circuit.region %></:item>
+  <:item title="Stage / Circuit name"><%= @circuit.display_name %></:item>
+  <:item title="Distance (Km)"><%= @circuit.distance %></:item>
+</.list>
+
+<.back navigate={~p"/circuits"}>Back to circuits</.back>
+
+<.modal
+  :if={@live_action == :edit}
+  id="circuit-modal"
+  show
+  on_cancel={JS.patch(~p"/circuits/#{@circuit}")}
+>
+  <.live_component
+    module={RacingLeaderboardsWeb.CircuitLive.FormComponent}
+    id={@circuit.id}
+    title={@page_title}
+    action={@live_action}
+    circuit={@circuit}
+    patch={~p"/circuits/#{@circuit}"}
+  />
+</.modal>

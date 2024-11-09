@@ -1,0 +1,704 @@
+[
+  {
+    "country": "Argentina",
+    "region": "Catamarca Province",
+    "stages": [
+      {
+        "circuit": "Las Juntas",
+        "distance": 8.25
+      },
+      {
+        "circuit": "Valle de los puentes",
+        "distance": 7.98
+      },
+      {
+        "circuit": "Camino de acantilados y rocas",
+        "distance": 5.3
+      },
+      {
+        "circuit": "San Isidro",
+        "distance": 4.48
+      },
+      {
+        "circuit": "Miraflores",
+        "distance": 3.35
+      },
+      {
+        "circuit": "El Rodeo",
+        "distance": 2.84
+      },
+      {
+        "circuit": "Camino a La Puerta",
+        "distance": 8.25
+      },
+      {
+        "circuit": "Valle de los puentes a la inversa",
+        "distance": 7.98
+      },
+      {
+        "circuit": "Camino de acantilados y rocas inverso",
+        "distance": 5.3
+      },
+      {
+        "circuit": "Camino a Coneta",
+        "distance": 4.48
+      },
+      {
+        "circuit": "Huillaprima",
+        "distance": 3.35
+      },
+      {
+        "circuit": "La Merced",
+        "distance": 2.84
+      }
+    ]
+  },
+  {
+    "country": "Australia",
+    "region": "Monaro",
+    "stages": [
+      {
+        "circuit": "Mount Kaye Pass",
+        "distance": 12.5
+      },
+      {
+        "circuit": "Chandlers Creek",
+        "distance": 12.34
+      },
+      {
+        "circuit": "Bondi Forest",
+        "distance": 7.01
+      },
+      {
+        "circuit": "Rockton Plains",
+        "distance": 6.89
+      },
+      {
+        "circuit": "Yambulla Mountain Ascent",
+        "distance": 6.64
+      },
+      {
+        "circuit": "Noorinbee Ridge Ascent",
+        "distance": 5.28
+      },
+      {
+        "circuit": "Mount Kaye Pass Reverse",
+        "distance": 12.5
+      },
+      {
+        "circuit": "Chandlers Creek Reverse",
+        "distance": 12.34
+      },
+      {
+        "circuit": "Taylor Farm Sprint",
+        "distance": 7.01
+      },
+      {
+        "circuit": "Rockton Plains Reverse",
+        "distance": 6.89
+      },
+      {
+        "circuit": "Yambulla Mountain Descent",
+        "distance": 6.64
+      },
+      {
+        "circuit": "Noorinbee Ridge Descent",
+        "distance": 5.28
+      }
+    ]
+  },
+  {
+    "country": "New Zealand",
+    "region": "Hawkes Bay",
+    "stages": [
+      {
+        "circuit": "Waimarama Point Forward",
+        "distance": 16.06
+      },
+      {
+        "circuit": "Te Awanga Forward",
+        "distance": 11.48
+      },
+      {
+        "circuit": "Waimarama Sprint Forward",
+        "distance": 8.81
+      },
+      {
+        "circuit": "Elsthorpe Sprint Forward",
+        "distance": 7.32
+      },
+      {
+        "circuit": "Ocean Beach Sprint Forward",
+        "distance": 6.61
+      },
+      {
+        "circuit": "Te Awanga Sprint Forward",
+        "distance": 4.79
+      },
+      {
+        "circuit": "Waimarama Point Reverse",
+        "distance": 16.06
+      },
+      {
+        "circuit": "Ocean Beach",
+        "distance": 11.48
+      },
+      {
+        "circuit": "Waimarama Sprint Reverse",
+        "distance": 8.81
+      },
+      {
+        "circuit": "Elsthorpe Sprint Reverse",
+        "distance": 7.32
+      },
+      {
+        "circuit": "Ocean Beach Sprint Reverse",
+        "distance": 6.61
+      },
+      {
+        "circuit": "Te Awanga Sprint Reverse",
+        "distance": 4.79
+      }
+    ]
+  },
+  {
+    "country": "Spain",
+    "region": "Ribadelles",
+    "stages": [
+      {
+        "circuit": "Comienzo De Bellriu",
+        "distance": 14.34
+      },
+      {
+        "circuit": "Centenera",
+        "distance": 10.57
+      },
+      {
+        "circuit": "Ascenso por valle el Gualet",
+        "distance": 7.0
+      },
+      {
+        "circuit": "Viñedos dentro del valle Parra",
+        "distance": 6.81
+      },
+      {
+        "circuit": "Viñedos Dardenyà",
+        "distance": 6.55
+      },
+      {
+        "circuit": "Descenso por carretera",
+        "distance": 4.58
+      },
+      {
+        "circuit": "Final de Bellriu",
+        "distance": 14.34
+      },
+      {
+        "circuit": "Camino a Centenera",
+        "distance": 10.57
+      },
+      {
+        "circuit": "Salida desde Montverd",
+        "distance": 7.0
+      },
+      {
+        "circuit": "Ascenso bosque Montverd",
+        "distance": 6.81
+      },
+      {
+        "circuit": "Viñedos Dardenyà inversa",
+        "distance": 6.55
+      },
+      {
+        "circuit": "Subida por carretera",
+        "distance": 4.58
+      }
+    ]
+  },
+  {
+    "country": "USA",
+    "region": "New England",
+    "stages": [
+      {
+        "circuit": "Beaver Creek Trail Forward",
+        "distance": 12.86
+      },
+      {
+        "circuit": "North Fork Pass",
+        "distance": 12.5
+      },
+      {
+        "circuit": "Hancock Creek Burst",
+        "distance": 6.89
+      },
+      {
+        "circuit": "Fuller Mountain Ascent",
+        "distance": 6.64
+      },
+      {
+        "circuit": "Tolt Valley Sprint Forward",
+        "distance": 6.1
+      },
+      {
+        "circuit": "Hancock Hill Sprint Forward",
+        "distance": 6.01
+      },
+      {
+        "circuit": "Beaver Creek Trail Reverse",
+        "distance": 12.86
+      },
+      {
+        "circuit": "North Fork Pass Reverse",
+        "distance": 12.5
+      },
+      {
+        "circuit": "Fury Lake Depart",
+        "distance": 6.89
+      },
+      {
+        "circuit": "Fuller Mountain Descent",
+        "distance": 6.64
+      },
+      {
+        "circuit": "Tolt Valley Sprint Reverse",
+        "distance": 6.1
+      },
+      {
+        "circuit": "Hancock Hill Sprint Reverse",
+        "distance": 6.01
+      }
+    ]
+  },
+  {
+    "country": "Poland",
+    "region": "Łęczna County",
+    "stages": [
+      {
+        "circuit": "Zaróbka",
+        "distance": 16.46
+      },
+      {
+        "circuit": "Zienki",
+        "distance": 13.42
+      },
+      {
+        "circuit": "Marynka",
+        "distance": 9.25
+      },
+      {
+        "circuit": "Kopina",
+        "distance": 7.03
+      },
+      {
+        "circuit": "Lejno",
+        "distance": 6.72
+      },
+      {
+        "circuit": "Czarny Las",
+        "distance": 6.62
+      },
+      {
+        "circuit": "Zagórze",
+        "distance": 16.46
+      },
+      {
+        "circuit": "Jezioro Rotcze",
+        "distance": 13.42
+      },
+      {
+        "circuit": "Borysik",
+        "distance": 9.25
+      },
+      {
+        "circuit": "Józefin",
+        "distance": 7.03
+      },
+      {
+        "circuit": "Jagodno",
+        "distance": 6.82
+      },
+      {
+        "circuit": "Jezioro Lukie",
+        "distance": 6.62
+      }
+    ]
+  },
+  {
+    "country": "Monaco",
+    "region": "Monte Carlo",
+    "stages": [
+      {
+        "circuit": "Vallée descendante",
+        "distance": 10.87
+      },
+      {
+        "circuit": "Pra d'Alart",
+        "distance": 9.83
+      },
+      {
+        "circuit": "Col de Turini - Départ en descente",
+        "distance": 6.85
+      },
+      {
+        "circuit": "Gordolon - Courte montée",
+        "distance": 5.17
+      },
+      {
+        "circuit": "Col de Turini sprint en montée",
+        "distance": 4.73
+      },
+      {
+        "circuit": "Route de Turini Descente",
+        "distance": 3.95
+      },
+      {
+        "circuit": "Route de Turini",
+        "distance": 10.87
+      },
+      {
+        "circuit": "Col de Turini Départ",
+        "distance": 9.83
+      },
+      {
+        "circuit": "Route de Turini Montée",
+        "distance": 6.84
+      },
+      {
+        "circuit": "Col de Turini - Descente",
+        "distance": 5.17
+      },
+      {
+        "circuit": "Col de Turini - Sprint en descente",
+        "distance": 4.73
+      },
+      {
+        "circuit": "Approche du Col de Turini - Montée",
+        "distance": 3.95
+      }
+    ]
+  },
+  {
+    "country": "Sweden",
+    "region": "Värmland",
+    "stages": [
+      {
+        "circuit": "Hamra",
+        "distance": 12.34
+      },
+      {
+        "circuit": "Ransbysäter",
+        "distance": 11.98
+      },
+      {
+        "circuit": "Elgsjön",
+        "distance": 7.28
+      },
+      {
+        "circuit": "Stor-jangen Sprint",
+        "distance": 6.69
+      },
+      {
+        "circuit": "Älgsjön Sprint",
+        "distance": 5.25
+      },
+      {
+        "circuit": "Östra Hinnsjön",
+        "distance": 5.19
+      },
+      {
+        "circuit": "Lysvik",
+        "distance": 12.34
+      },
+      {
+        "circuit": "Norraskoga",
+        "distance": 11.98
+      },
+      {
+        "circuit": "Älgsjön",
+        "distance": 7.28
+      },
+      {
+        "circuit": "Stor-jangen Sprint Reverse",
+        "distance": 6.69
+      },
+      {
+        "circuit": "Skogsrallyt",
+        "distance": 5.25
+      },
+      {
+        "circuit": "Björklangen",
+        "distance": 5.19
+      }
+    ]
+  },
+  {
+    "country": "Germany",
+    "region": "Baumholder",
+    "stages": [
+      {
+        "circuit": "Oberstein",
+        "distance": 11.67
+      },
+      {
+        "circuit": "Hammerstein",
+        "distance": 10.81
+      },
+      {
+        "circuit": "Kreuzungsring",
+        "distance": 6.31
+      },
+      {
+        "circuit": "Verbundsring",
+        "distance": 5.85
+      },
+      {
+        "circuit": "Innerer Feld-Sprint",
+        "distance": 5.56
+      },
+      {
+        "circuit": "Waldaufstieg",
+        "distance": 5.39
+      },
+      {
+        "circuit": "Frauenberg",
+        "distance": 11.67
+      },
+      {
+        "circuit": "Ruschberg",
+        "distance": 10.7
+      },
+      {
+        "circuit": "Kreuzungsring reverse",
+        "distance": 6.31
+      },
+      {
+        "circuit": "Verbundsring Reverse",
+        "distance": 5.85
+      },
+      {
+        "circuit": "Innerer Feld-Sprint (umgekehrt)",
+        "distance": 5.56
+      },
+      {
+        "circuit": "Waldabstieg",
+        "distance": 5.39
+      }
+    ]
+  },
+  {
+    "country": "Finland",
+    "region": "Jämsä",
+    "stages": [
+      {
+        "circuit": "Kakaristo",
+        "distance": 16.2
+      },
+      {
+        "circuit": "Kontinjärvi",
+        "distance": 15.05
+      },
+      {
+        "circuit": "Kotajärvi",
+        "distance": 8.1
+      },
+      {
+        "circuit": "Iso Oksjärvi",
+        "distance": 8.04
+      },
+      {
+        "circuit": "Kailajärvi",
+        "distance": 7.51
+      },
+      {
+        "circuit": "Naarajärvi",
+        "distance": 7.43
+      },
+      {
+        "circuit": "Pitkäjärvi",
+        "distance": 16.2
+      },
+      {
+        "circuit": "Hämelahti",
+        "distance": 14.96
+      },
+      {
+        "circuit": "Oksala",
+        "distance": 8.1
+      },
+      {
+        "circuit": "Järvenkylä",
+        "distance": 8.05
+      },
+      {
+        "circuit": "Jyrkysjärvi",
+        "distance": 7.55
+      },
+      {
+        "circuit": "Paskuri",
+        "distance": 7.34
+      }
+    ]
+  },
+  {
+    "country": "Greece",
+    "region": "Argolis",
+    "stages": [
+      {
+        "circuit": "Anodou Farmakas",
+        "distance": 9.6
+      },
+      {
+        "circuit": "Pomona Érixi",
+        "distance": 5.09
+      },
+      {
+        "circuit": "Koryfi Dafni",
+        "distance": 4.5
+      },
+      {
+        "circuit": "Perasma Platani",
+        "distance": 10.69
+      },
+      {
+        "circuit": "Ourea Spevsi",
+        "distance": 5.74
+      },
+      {
+        "circuit": "Abies Koiláda",
+        "distance": 7.09
+      },
+      {
+        "circuit": "Kathodo Leontiou",
+        "distance": 9.6
+      },
+      {
+        "circuit": "Fourkéta Kourva",
+        "distance": 4.5
+      },
+      {
+        "circuit": "Ampelonas Ormi",
+        "distance": 4.95
+      },
+      {
+        "circuit": "Tsiristra Théa",
+        "distance": 10.36
+      },
+      {
+        "circuit": "Pedines Epidaxi",
+        "distance": 5.38
+      },
+      {
+        "circuit": "Ypsona tou Dasos",
+        "distance": 6.59
+      }
+    ]
+  },
+  {
+    "country": "Wales",
+    "region": "Powys",
+    "stages": [
+      {
+        "circuit": "River Severn Valley",
+        "distance": 11.4
+      },
+      {
+        "circuit": "Sweet Lamb",
+        "distance": 9.9
+      },
+      {
+        "circuit": "Fferm Wynt",
+        "distance": 5.7
+      },
+      {
+        "circuit": "Dyffryn Afon",
+        "distance": 5.7
+      },
+      {
+        "circuit": "Bidno Moorland",
+        "distance": 4.9
+      },
+      {
+        "circuit": "Pant Mawr",
+        "distance": 4.7
+      },
+      {
+        "circuit": "Bronfelen",
+        "distance": 11.4
+      },
+      {
+        "circuit": "Geufron Forest",
+        "distance": 10.0
+      },
+      {
+        "circuit": "Fferm Wynt Reverse",
+        "distance": 5.7
+      },
+      {
+        "circuit": "Dyffryn Afon Reverse",
+        "distance": 5.7
+      },
+      {
+        "circuit": "Bidno Moorland Reverse",
+        "distance": 4.8
+      },
+      {
+        "circuit": "Pant Mawr Reverse",
+        "distance": 5.1
+      }
+    ]
+  },
+  {
+    "country": "Scotland",
+    "region": "Perth and Kinross",
+    "stages": [
+      {
+        "circuit": "Newhouse Bridge",
+        "distance": 12.86
+      },
+      {
+        "circuit": "South Morningside",
+        "distance": 12.58
+      },
+      {
+        "circuit": "Annbank Station",
+        "distance": 7.77
+      },
+      {
+        "circuit": "Rosebank Farm",
+        "distance": 7.16
+      },
+      {
+        "circuit": "Old Butterstone Muir",
+        "distance": 5.82
+      },
+      {
+        "circuit": "Glencastle Farm",
+        "distance": 5.25
+      },
+      {
+        "circuit": "Newhouse Bridge Reverse",
+        "distance": 12.98
+      },
+      {
+        "circuit": "South Morningside Reverse",
+        "distance": 12.66
+      },
+      {
+        "circuit": "Annbank Station Reverse",
+        "distance": 7.59
+      },
+      {
+        "circuit": "Rosebank Farm Reverse",
+        "distance": 6.96
+      },
+      {
+        "circuit": "Old Butterstone Muir Reverse",
+        "distance": 5.66
+      },
+      {
+        "circuit": "Glencastle Farm Reverse",
+        "distance": 5.24
+      }
+    ]
+  }
+]
