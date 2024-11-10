@@ -14,10 +14,6 @@ defmodule RacingLeaderboardsWeb.CircuitLive.Index do
   end
 
   @impl true
-  @spec handle_params(any(), any(), %{
-          :assigns => atom() | %{:live_action => :edit | :index | :new, optional(any()) => any()},
-          optional(any()) => any()
-        }) :: {:noreply, map()}
   def handle_params(params, _url, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end

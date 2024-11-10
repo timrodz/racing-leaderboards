@@ -41,9 +41,7 @@ defmodule RacingLeaderboardsWeb.CircuitLive.FormComponent do
   end
 
   @impl true
-  @spec update(%{:circuit => any(), optional(any()) => any()}, any()) :: {:ok, map()}
   def update(%{circuit: circuit} = assigns, socket) do
-    # selected_game_code = nil
     games =
       Games.list_games() |> Enum.map(fn g -> {g.display_name, g.code |> String.to_atom()} end)
 
