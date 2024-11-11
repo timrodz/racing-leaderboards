@@ -19,6 +19,7 @@ defmodule RacingLeaderboards.Records do
   """
   def list_records do
     Repo.all(Record)
+    |> Repo.preload([:user, :circuit, :car])
   end
 
   @doc """
@@ -35,7 +36,7 @@ defmodule RacingLeaderboards.Records do
       ** (Ecto.NoResultsError)
 
   """
-  def get_record!(id), do: Repo.get!(Record, id)
+  def get_record!(id), do: Repo.get!(Record, id) |> Repo.preload(:user)
 
   @doc """
   Creates a record.
@@ -52,6 +53,7 @@ defmodule RacingLeaderboards.Records do
   def create_record(attrs \\ %{}) do
     %Record{}
     |> Record.changeset(attrs)
+    |> IO.inspect(label: "CHANGESET")
     |> Repo.insert()
   end
 

@@ -19,7 +19,7 @@ defmodule RacingLeaderboardsWeb.GameLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:display_name]} type="text" label="Display name" />
+        <.input field={@form[:name]} type="text" label="Display name" />
         <.input field={@form[:code]} type="text" label="Code" />
         <.input field={@form[:url]} type="text" label="Url" />
         <.input field={@form[:image_url]} type="text" label="Image url" />

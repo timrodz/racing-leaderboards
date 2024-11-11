@@ -12,7 +12,7 @@ defmodule RacingLeaderboards.GamesFixtures do
       attrs
       |> Enum.into(%{
         code: "some code",
-        display_name: "some display_name",
+        name: "some name",
         image_url: "some image_url",
         url: "some url"
       })

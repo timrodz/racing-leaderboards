@@ -1,7 +1,7 @@
 <.header>
   Listing Records
   <:actions>
-    <.link patch={~p"/records/new"}>
+    <.link patch={~p"/games/#{@game_code}/records/new"}>
       <.button>New Record</.button>
     </.link>
   </:actions>
@@ -10,17 +10,23 @@
 <.table
   id="records"
   rows={@streams.records}
-  row_click={fn {_id, record} -> JS.navigate(~p"/records/#{record}") end}
+  row_click={fn {_id, record} -> JS.navigate(~p"/games/#{@game_code}/records/#{record}") end}
 >
-  <:col :let={{_id, record}} label="User"><%= record.user %></:col>
-  <:col :let={{_id, record}} label="Time"><%= record.time %></:col>
+  <:col :let={{_id, record}} label="Circuit"><%= record.circuit.name %></:col>
+  <:col :let={{_id, record}} label="Car"><%= record.car.name %></:col>
+  <:col :let={{_id, record}} label="User"><%= record.user.name %></:col>
   <:col :let={{_id, record}} label="Date"><%= record.date %></:col>
-  <:col :let={{_id, record}} label="Verified"><%= record.is_verified %></:col>
+  <:col :let={{_id, record}} label="Time">
+    <%= record.time %>
+    <%= if record.is_dnf do %>
+      <span>DNF</span>
+    <% end %>
+  </:col>
   <:action :let={{_id, record}}>
     <div class="sr-only">
-      <.link navigate={~p"/records/#{record}"}>Show</.link>
+      <.link navigate={~p"/games/#{@game_code}/records/#{record}"}>Show</.link>
     </div>
-    <.link patch={~p"/records/#{record}/edit"}>Edit</.link>
+    <.link patch={~p"/games/#{@game_code}/records/#{record}/edit"}>Edit</.link>
   </:action>
   <:action :let={{id, record}}>
     <.link
@@ -32,11 +38,13 @@
   </:action>
 </.table>
 
+<.back navigate={~p"/games"}>Back to games</.back>
+
 <.modal
   :if={@live_action in [:new, :edit]}
   id="record-modal"
   show
-  on_cancel={JS.patch(~p"/records")}
+  on_cancel={JS.patch(~p"/games/#{@game_code}/records")}
 >
   <.live_component
     module={RacingLeaderboardsWeb.RecordLive.FormComponent}
@@ -44,6 +52,7 @@
     title={@page_title}
     action={@live_action}
     record={@record}
-    patch={~p"/records"}
+    game_id={@game_id}
+    patch={~p"/games/#{@game_code}/records"}
   />
 </.modal>

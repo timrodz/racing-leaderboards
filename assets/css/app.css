@@ -3,3 +3,11 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
+
+/* a {
+  @apply hover:underline hover:bg-yellow-50 rounded p-1 font-mono font-medium text-indigo-700;
+} */
+
+footer {
+  @apply mt-10 text-sm;
+}

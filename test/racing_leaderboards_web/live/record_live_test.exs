@@ -22,19 +22,19 @@ defmodule RacingLeaderboardsWeb.RecordLiveTest do
     setup [:create_record]
 
     test "lists all records", %{conn: conn, record: record} do
-      {:ok, _index_live, html} = live(conn, ~p"/records")
+      {:ok, _index_live, html} = live(conn, ~p"/games/0/records")
 
       assert html =~ "Listing Records"
       assert html =~ record.time
     end
 
     test "saves new record", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, ~p"/records")
+      {:ok, index_live, _html} = live(conn, ~p"/games/0/records")
 
       assert index_live |> element("a", "New Record") |> render_click() =~
                "New Record"
 
-      assert_patch(index_live, ~p"/records/new")
+      assert_patch(index_live, ~p"/games/0/records/new")
 
       assert index_live
              |> form("#record-form", record: @invalid_attrs)
@@ -44,7 +44,7 @@ defmodule RacingLeaderboardsWeb.RecordLiveTest do
              |> form("#record-form", record: @create_attrs)
              |> render_submit()
 
-      assert_patch(index_live, ~p"/records")
+      assert_patch(index_live, ~p"/games/0/records")
 
       html = render(index_live)
       assert html =~ "Record created successfully"
@@ -52,12 +52,12 @@ defmodule RacingLeaderboardsWeb.RecordLiveTest do
     end
 
     test "updates record in listing", %{conn: conn, record: record} do
-      {:ok, index_live, _html} = live(conn, ~p"/records")
+      {:ok, index_live, _html} = live(conn, ~p"/games/0/records")
 
       assert index_live |> element("#records-#{record.id} a", "Edit") |> render_click() =~
                "Edit Record"
 
-      assert_patch(index_live, ~p"/records/#{record}/edit")
+      assert_patch(index_live, ~p"/games/0/records/#{record}/edit")
 
       assert index_live
              |> form("#record-form", record: @invalid_attrs)
@@ -67,7 +67,7 @@ defmodule RacingLeaderboardsWeb.RecordLiveTest do
              |> form("#record-form", record: @update_attrs)
              |> render_submit()
 
-      assert_patch(index_live, ~p"/records")
+      assert_patch(index_live, ~p"/games/0/records")
 
       html = render(index_live)
       assert html =~ "Record updated successfully"
@@ -75,7 +75,7 @@ defmodule RacingLeaderboardsWeb.RecordLiveTest do
     end
 
     test "deletes record in listing", %{conn: conn, record: record} do
-      {:ok, index_live, _html} = live(conn, ~p"/records")
+      {:ok, index_live, _html} = live(conn, ~p"/games/0/records")
 
       assert index_live |> element("#records-#{record.id} a", "Delete") |> render_click()
       refute has_element?(index_live, "#records-#{record.id}")
@@ -86,19 +86,19 @@ defmodule RacingLeaderboardsWeb.RecordLiveTest do
     setup [:create_record]
 
     test "displays record", %{conn: conn, record: record} do
-      {:ok, _show_live, html} = live(conn, ~p"/records/#{record}")
+      {:ok, _show_live, html} = live(conn, ~p"/games/0/records/#{record}")
 
       assert html =~ "Show Record"
       assert html =~ record.time
     end
 
     test "updates record within modal", %{conn: conn, record: record} do
-      {:ok, show_live, _html} = live(conn, ~p"/records/#{record}")
+      {:ok, show_live, _html} = live(conn, ~p"/games/0/records/#{record}")
 
       assert show_live |> element("a", "Edit") |> render_click() =~
                "Edit Record"
 
-      assert_patch(show_live, ~p"/records/#{record}/show/edit")
+      assert_patch(show_live, ~p"/games/0/records/#{record}/show/edit")
 
       assert show_live
              |> form("#record-form", record: @invalid_attrs)
@@ -108,7 +108,7 @@ defmodule RacingLeaderboardsWeb.RecordLiveTest do
              |> form("#record-form", record: @update_attrs)
              |> render_submit()
 
-      assert_patch(show_live, ~p"/records/#{record}")
+      assert_patch(show_live, ~p"/games/0/records/#{record}")
 
       html = render(show_live)
       assert html =~ "Record updated successfully"

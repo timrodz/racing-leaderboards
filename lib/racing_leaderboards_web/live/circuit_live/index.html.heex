@@ -13,7 +13,7 @@
   row_click={fn {_id, circuit} -> JS.navigate(~p"/circuits/#{circuit}") end}
 >
   <:col :let={{_id, circuit}} label="Game">
-    <%= @games[circuit.game_id].display_name %>
+    <%= @games[circuit.game_id].name %>
   </:col>
   <:col :let={{_id, circuit}} label="Circuit">
     <%= if (not is_nil circuit.country) and (circuit.country != "") do %>
@@ -21,7 +21,7 @@
     <% else %>
       <%= circuit.region %> /
     <% end %>
-    <%= circuit.display_name %>
+    <%= circuit.name %>
   </:col>
   <:col :let={{_id, circuit}} label="Distance (Km)"><%= circuit.distance %> Km</:col>
   <:action :let={{_id, circuit}}>
@@ -47,3 +47,7 @@
     patch={~p"/circuits"}
   />
 </.modal>
+
+<footer>
+  <a href={~p"/admin"}>Admin</a>
+</footer>

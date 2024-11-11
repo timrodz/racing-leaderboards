@@ -1,0 +1,48 @@
+<.header>
+  Listing Cars
+  <:actions>
+    <.link patch={~p"/cars/new"}>
+      <.button>New Car</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="cars"
+  rows={@streams.cars}
+  row_click={fn {_id, car} -> JS.navigate(~p"/cars/#{car}") end}
+>
+  <:col :let={{_id, car}} label="Name"><%= car.name %></:col>
+  <:col :let={{_id, car}} label="Class"><%= car.class %></:col>
+  <:col :let={{_id, car}} label="Horsepower"><%= car.horsepower %></:col>
+  <:col :let={{_id, car}} label="Weight"><%= car.weight %></:col>
+  <:col :let={{_id, car}} label="Powertrain type"><%= car.powertrain_type %></:col>
+  <:col :let={{_id, car}} label="Transmision type"><%= car.transmision_type %></:col>
+  <:col :let={{_id, car}} label="Engine type"><%= car.engine_type %></:col>
+  <:col :let={{_id, car}} label="Aspiration type"><%= car.aspiration_type %></:col>
+  <:action :let={{_id, car}}>
+    <div class="sr-only">
+      <.link navigate={~p"/cars/#{car}"}>Show</.link>
+    </div>
+    <.link patch={~p"/cars/#{car}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, car}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: car.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="car-modal" show on_cancel={JS.patch(~p"/cars")}>
+  <.live_component
+    module={RacingLeaderboardsWeb.CarLive.FormComponent}
+    id={@car.id || :new}
+    title={@page_title}
+    action={@live_action}
+    car={@car}
+    patch={~p"/cars"}
+  />
+</.modal>

@@ -4,7 +4,7 @@ defmodule RacingLeaderboards.Repo.Migrations.CreateGames do
   def change do
     create table(:games) do
       add :code, :string
-      add :display_name, :string
+      add :name, :string
       add :url, :string
       add :image_url, :string
 

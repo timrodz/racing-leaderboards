@@ -5,7 +5,7 @@ defmodule RacingLeaderboards.Repo.Migrations.CreateCircuits do
     create table(:circuits) do
       add :country, :string
       add :region, :string
-      add :display_name, :string
+      add :name, :string
       add :distance, :decimal
       add :surface, :string
       add :image_url, :string

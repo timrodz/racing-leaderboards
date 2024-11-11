@@ -21,6 +21,10 @@ defmodule RacingLeaderboards.Circuits do
     Repo.all(Circuit)
   end
 
+  def list_circuits_by_game(id) do
+    Repo.all(from(c in Circuit, where: c.game_id == ^id))
+  end
+
   @doc """
   Gets a single circuit.
 

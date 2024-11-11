@@ -8,7 +8,7 @@ defmodule RacingLeaderboards.GamesTest do
 
     import RacingLeaderboards.GamesFixtures
 
-    @invalid_attrs %{code: nil, url: nil, display_name: nil, image_url: nil}
+    @invalid_attrs %{code: nil, url: nil, name: nil, image_url: nil}
 
     test "list_games/0 returns all games" do
       game = game_fixture()
@@ -21,12 +21,17 @@ defmodule RacingLeaderboards.GamesTest do
     end
 
     test "create_game/1 with valid data creates a game" do
-      valid_attrs = %{code: "some code", url: "some url", display_name: "some display_name", image_url: "some image_url"}
+      valid_attrs = %{
+        code: "some code",
+        url: "some url",
+        name: "some name",
+        image_url: "some image_url"
+      }
 
       assert {:ok, %Game{} = game} = Games.create_game(valid_attrs)
       assert game.code == "some code"
       assert game.url == "some url"
-      assert game.display_name == "some display_name"
+      assert game.name == "some name"
       assert game.image_url == "some image_url"
     end
 
@@ -36,12 +41,18 @@ defmodule RacingLeaderboards.GamesTest do
 
     test "update_game/2 with valid data updates the game" do
       game = game_fixture()
-      update_attrs = %{code: "some updated code", url: "some updated url", display_name: "some updated display_name", image_url: "some updated image_url"}
+
+      update_attrs = %{
+        code: "some updated code",
+        url: "some updated url",
+        name: "some updated name",
+        image_url: "some updated image_url"
+      }
 
       assert {:ok, %Game{} = game} = Games.update_game(game, update_attrs)
       assert game.code == "some updated code"
       assert game.url == "some updated url"
-      assert game.display_name == "some updated display_name"
+      assert game.name == "some updated name"
       assert game.image_url == "some updated image_url"
     end
 

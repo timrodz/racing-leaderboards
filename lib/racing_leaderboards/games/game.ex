@@ -5,8 +5,11 @@ defmodule RacingLeaderboards.Games.Game do
   schema "games" do
     field :code, :string
     field :url, :string
-    field :display_name, :string
+    field :name, :string
     field :image_url, :string
+
+    has_many :circuits, RacingLeaderboards.Circuits.Circuit
+    has_many :cars, RacingLeaderboards.Cars.Car
 
     timestamps(type: :utc_datetime)
   end
@@ -14,7 +17,7 @@ defmodule RacingLeaderboards.Games.Game do
   @doc false
   def changeset(game, attrs) do
     game
-    |> cast(attrs, [:display_name, :code, :url, :image_url])
-    |> validate_required([:display_name, :code])
+    |> cast(attrs, [:name, :code, :url, :image_url])
+    |> validate_required([:name, :code])
   end
 end

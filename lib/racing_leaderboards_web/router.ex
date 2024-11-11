@@ -18,6 +18,15 @@ defmodule RacingLeaderboardsWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/admin", AdminController, :home
+
+    # USERS
+    live "/users", UserLive.Index, :index
+    live "/users/new", UserLive.Index, :new
+    live "/users/:id/edit", UserLive.Index, :edit
+
+    live "/users/:id", UserLive.Show, :show
+    live "/users/:id/show/edit", UserLive.Show, :edit
 
     # GAMES
     live "/games", GameLive.Index, :index
@@ -27,7 +36,7 @@ defmodule RacingLeaderboardsWeb.Router do
     live "/games/:id", GameLive.Show, :show
     live "/games/:id/show/edit", GameLive.Show, :edit
 
-    # Circuits
+    # CIRCUITS
     live "/circuits", CircuitLive.Index, :index
     live "/circuits/new", CircuitLive.Index, :new
     live "/circuits/:id/edit", CircuitLive.Index, :edit
@@ -35,13 +44,21 @@ defmodule RacingLeaderboardsWeb.Router do
     live "/circuits/:id", CircuitLive.Show, :show
     live "/circuits/:id/show/edit", CircuitLive.Show, :edit
 
-    # RECORDS
-    live "/records", RecordLive.Index, :index
-    live "/records/new", RecordLive.Index, :new
-    live "/records/:id/edit", RecordLive.Index, :edit
+    # CARS
+    live "/cars", CarLive.Index, :index
+    live "/cars/new", CarLive.Index, :new
+    live "/cars/:id/edit", CarLive.Index, :edit
 
-    live "/records/:id", RecordLive.Show, :show
-    live "/records/:id/show/edit", RecordLive.Show, :edit
+    live "/cars/:id", CarLive.Show, :show
+    live "/cars/:id/show/edit", CarLive.Show, :edit
+
+    # RECORDS
+    live "/games/:game_code/records", RecordLive.Index, :index
+    live "/games/:game_code/records/new", RecordLive.Index, :new
+    live "/games/:game_code/records/:id/edit", RecordLive.Index, :edit
+
+    live "/games/:game_code/records/:id", RecordLive.Show, :show
+    live "/games/:game_code/records/:id/show/edit", RecordLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

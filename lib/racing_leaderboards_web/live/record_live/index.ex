@@ -1,4 +1,5 @@
 defmodule RacingLeaderboardsWeb.RecordLive.Index do
+  alias RacingLeaderboards.Games
   use RacingLeaderboardsWeb, :live_view
 
   alias RacingLeaderboards.Records
@@ -11,7 +12,12 @@ defmodule RacingLeaderboardsWeb.RecordLive.Index do
 
   @impl true
   def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+    game = Games.get_game_by_code!(params["game_code"]) |> IO.inspect()
+
+    {:noreply,
+     socket
+     |> assign(game_code: game.code, game_id: game.id)
+     |> apply_action(socket.assigns.live_action, params)}
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do

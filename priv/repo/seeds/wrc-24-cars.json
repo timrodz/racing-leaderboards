@@ -1,0 +1,171 @@
+[
+  {
+    "category": "Rally",
+    "cars": [
+      {
+        "type": "WRC",
+        "vehicles": [
+          "Ford Puma Rally1 HYBRID '23",
+          "Hyundai i20 N Rally1 HYBRID '23",
+          "Toyota GR Yaris Rally1 HYBRID '23"
+        ]
+      },
+      {
+        "type": "WRC2",
+        "vehicles": [
+          "Citroën C3 Rally2",
+          "Ford Fiesta Rally2",
+          "Hyundai i20 N Rally2",
+          "ŠKODA Fabia Rally2 Evo",
+          "ŠKODA Fabia RS Rally2",
+          "Volkswagen Polo GTI R5"
+        ]
+      },
+      {
+        "type": "JUNIOR WRC",
+        "vehicles": ["Ford Fiesta Rally3"]
+      },
+      {
+        "type": "WORLD RALLY CAR: 2017-2021",
+        "vehicles": ["Ford Fiesta WRC", "Volkswagen Polo 2017"]
+      },
+      {
+        "type": "WORLD RALLY CAR: 1997-2011",
+        "vehicles": [
+          "Citroën C4 WRC",
+          "Citroën Xsara WRC",
+          "Ford Focus RS Rally 2001",
+          "Ford Focus RS Rally 2008",
+          "MINI Countryman Rally Edition",
+          "Mitsubishi Lancer Evolution VI",
+          "Peugeot 206 Rally",
+          "Seat Córdoba WRC",
+          "ŠKODA Fabia WRC",
+          "SUBARU Impreza 1998",
+          "SUBARU Impreza 2001",
+          "SUBARU Impreza 2008"
+        ]
+      },
+      {
+        "type": "RALLY2",
+        "vehicles": ["Ford Fiesta R5 MK7 Evo 2", "Peugeot 208 T16 R5"]
+      },
+      {
+        "type": "RALLY4",
+        "vehicles": [
+          "Ford Fiesta MK8 Rally4",
+          "Opel Adam R2",
+          "Peugeot 208 Rally4",
+          "Renault Twingo II"
+        ]
+      },
+      {
+        "type": "NR4/R4",
+        "vehicles": [
+          "McRae R4",
+          "Mitsubishi Lancer Evolution X",
+          "SUBARU WRX STI NR4"
+        ]
+      },
+      {
+        "type": "S2000",
+        "vehicles": [
+          "Fiat Grande Punto Abarth S2000",
+          "Opel Corsa S2000",
+          "Peugeot 207 S2000"
+        ]
+      },
+      {
+        "type": "S1600",
+        "vehicles": [
+          "Citroën C2 Super 1600",
+          "Citroën Saxo Super 1600",
+          "Ford Puma S1600",
+          "Renault Clio S1600"
+        ]
+      },
+      {
+        "type": "F2 KIT CAR",
+        "vehicles": [
+          "Ford Escort Mk 6 Maxi",
+          "Peugeot 306 Maxi",
+          "Renault Maxi Mégane",
+          "Seat Ibiza Kit Car",
+          "Vauxhall Astra Rally Car",
+          "Volkswagen Golf IV Kit Car"
+        ]
+      },
+      {
+        "type": "GROUP A",
+        "vehicles": [
+          "Ford Escort RS Cosworth",
+          "Lancia Delta HF Integrale",
+          "Mitsubishi Galant VR4",
+          "SUBARU Impreza 1995",
+          "SUBARU Legacy RS"
+        ]
+      },
+      {
+        "type": "GROUP B (4WD)",
+        "vehicles": [
+          "Audi Sport quattro S1 (E2)",
+          "Ford RS200",
+          "Lancia Delta S4",
+          "MG Metro 6R4",
+          "Peugeot 205 T16 Evo 2"
+        ]
+      },
+      {
+        "type": "GROUP B (RWD)",
+        "vehicles": [
+          "BMW M1 Procar Rally",
+          "Lancia 037 Evo 2",
+          "Opel Manta 400",
+          "Porsche 911 SC RS"
+        ]
+      },
+      {
+        "type": "H3 (RWD)",
+        "vehicles": [
+          "BMW M3 Evo Rally",
+          "Ford Escort MK2 McRae Motorsport",
+          "Ford Sierra Cosworth RS500",
+          "Lancia Stratos",
+          "Opel Ascona 400",
+          "Renault 5 Turbo"
+        ]
+      },
+      {
+        "type": "H2 (RWD)",
+        "vehicles": [
+          "Alpine Renault A110 1600 S",
+          "Fiat 131 Abarth Rally",
+          "Ford Escort MK2",
+          "Hillman Avenger",
+          "Opel Kadett C GT/E",
+          "Talbot Sunbeam Lotus"
+        ]
+      },
+      {
+        "type": "H2 (FWD)",
+        "vehicles": [
+          "Peugeot 205 GTI",
+          "Peugeot 309 GTI",
+          "Volkswagen Golf GTI"
+        ]
+      },
+      {
+        "type": "H1 (FWD)",
+        "vehicles": ["Lancia Fulvia HF", "MINI Cooper S", "Vauxhall Nova Sport"]
+      },
+      {
+        "type": "BUILDER CARS",
+        "vehicles": [
+          "WRC Builder Car",
+          "WRC2 Builder Car",
+          "Junior WRC Builder Car"
+        ]
+      }
+    ]
+  }
+]

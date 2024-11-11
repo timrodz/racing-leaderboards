@@ -1,0 +1,175 @@
+[
+  {
+    "category": "Rally",
+    "cars": [
+      {
+        "type": "H1 (FWD)",
+        "vehicles": [
+          "Mini Cooper S",
+          "Lancia Fulvia HF",
+          "DS Automobiles DS 21"
+        ]
+      },
+      {
+        "type": "H2 (FWD)",
+        "vehicles": ["Volkswagen Golf GTI 16v", "Peugeot 205 GTI"]
+      },
+      {
+        "type": "H2 (RWD)",
+        "vehicles": [
+          "Ford Escort Mk II",
+          "Alpine Renault A110 1600 S",
+          "Fiat 131 Abarth",
+          "Opel Kadett C GT/E"
+        ]
+      },
+      {
+        "type": "H3 (RWD)",
+        "vehicles": [
+          "BMW E30 M3 Evo Rally",
+          "Opel Ascona 400",
+          "Lancia Stratos",
+          "Renault 5 Turbo",
+          "Datsun 240Z",
+          "Ford Sierra Cosworth RS500"
+        ]
+      },
+      {
+        "type": "GROUP B (RWD)",
+        "vehicles": [
+          "Lancia 037 Evo 2",
+          "Opel Manta 400",
+          "BMW M1 Procar",
+          "Porsche 911 SC RS"
+        ]
+      },
+      {
+        "type": "GROUP B (4WD)",
+        "vehicles": [
+          "Audi Sport quattro S1 E2",
+          "Peugeot 205 T16 Evo 2",
+          "Lancia Delta S4",
+          "Ford RS200",
+          "MG Metro 6R4"
+        ]
+      },
+      {
+        "type": "R2",
+        "vehicles": ["Ford Fiesta R2", "Opel Adam R2", "Peugeot 208 R2"]
+      },
+      {
+        "type": "F2 KIT CAR",
+        "vehicles": [
+          "Peugeot 306 Maxi",
+          "SEAT Ibiza Kitcar",
+          "Volkswagen Golf Kitcar"
+        ]
+      },
+      {
+        "type": "GROUP A",
+        "vehicles": [
+          "Mitsubishi Lancer Evolution VI",
+          "Subaru Impreza 1995",
+          "Lancia Delta HF Integrale",
+          "Ford Escort RS Cosworth",
+          "Subaru Legacy RS"
+        ]
+      },
+      {
+        "type": "NR4/R4",
+        "vehicles": ["Subaru WRX STI NR4", "Mitsubishi Lancer Evolution X"]
+      },
+      {
+        "type": "UP TO 2000CC",
+        "vehicles": [
+          "Ford Focus RS Rally 2001",
+          "Subaru Impreza (2001)",
+          "Citroën C4 Rally",
+          "Škoda Fabia Rally 2005",
+          "Ford Focus RS Rally 2007",
+          "Subaru Impreza",
+          "Peugeot 206 Rally",
+          "Subaru Impreza S4 Rally"
+        ]
+      },
+      {
+        "type": "R5",
+        "vehicles": [
+          "Ford Fiesta R5",
+          "Ford Fiesta R5 MKII",
+          "Peugeot 208 R5 T16",
+          "Mitsubishi Space Star R5",
+          "ŠKODA Fabia R5",
+          "Citroën C3 R5",
+          "Volkswagen Polo GTI R5"
+        ]
+      },
+      {
+        "type": "RALLY GT",
+        "vehicles": [
+          "Chevrolet Camaro GT4-R",
+          "Porsche 911 RGT Rally Spec",
+          "Aston Martin V8 Vantage GT4",
+          "Ford Mustang GT4",
+          "BMW M2 Competition"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Rallycross",
+    "cars": [
+      {
+        "type": "RX SUPER 1600S",
+        "vehicles": [
+          "Volkswagen Polo S1600",
+          "Renault Clio R.S. S1600",
+          "Opel Corsa Super 1600"
+        ]
+      },
+      {
+        "type": "CROSSKART",
+        "vehicles": ["Speedcar Xtrem"]
+      },
+      {
+        "type": "GROUP B (RALLYCROSS)",
+        "vehicles": [
+          "Lancia Delta S4 Rallycross",
+          "Ford RS200 Evolution",
+          "Peugeot 205 T16 Rallycross",
+          "MG Metro 6R4 Rallycross"
+        ]
+      },
+      {
+        "type": "RX2",
+        "vehicles": ["Ford Fiesta OMSE SuperCar Lite"]
+      },
+      {
+        "type": "RX SUPERCARS",
+        "vehicles": [
+          "Subaru WRX STI RX",
+          "Peugeot 208 WRX",
+          "Audi S1 EKS RX quattro",
+          "Ford Fiesta Rallycross (Mk8)",
+          "Renault Megane RS RX",
+          "Volkswagen Polo R Supercar",
+          "Ford Fiesta Rallycross (Mk7)"
+        ]
+      },
+      {
+        "type": "RX SUPERCARS 2019",
+        "vehicles": [
+          "Renault Clio R.S. RX",
+          "Renault Megane RS RX",
+          "Ford Fiesta Rallycross (Mk8)",
+          "Mini Cooper SX1",
+          "Peugeot 208 WRX",
+          "Ford Fiesta Rallycross (STARD)",
+          "Ford Fiesta RXS Evo 5",
+          "Audi S1 EKS RX quattro",
+          "Seat Ibiza RX"
+        ]
+      }
+    ]
+  }
+]

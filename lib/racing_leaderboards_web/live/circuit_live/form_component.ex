@@ -1,5 +1,4 @@
 defmodule RacingLeaderboardsWeb.CircuitLive.FormComponent do
-  alias Phoenix.LiveViewTest.Element
   alias RacingLeaderboards.Games
   use RacingLeaderboardsWeb, :live_component
 
@@ -22,7 +21,7 @@ defmodule RacingLeaderboardsWeb.CircuitLive.FormComponent do
         phx-submit="save"
       >
         <.input
-          field={@form[:game_code]}
+          field={@form[:game_id]}
           type="select"
           label="Game"
           options={@games}
@@ -30,7 +29,7 @@ defmodule RacingLeaderboardsWeb.CircuitLive.FormComponent do
         />
         <.input field={@form[:country]} type="text" label="Country" />
         <.input field={@form[:region]} type="text" label="Region" />
-        <.input field={@form[:display_name]} type="text" label="Stage / Circuit name" />
+        <.input field={@form[:name]} type="text" label="Stage / Circuit name" />
         <.input field={@form[:distance]} type="number" label="Distance (Km)" step="any" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Circuit</.button>
@@ -43,7 +42,7 @@ defmodule RacingLeaderboardsWeb.CircuitLive.FormComponent do
   @impl true
   def update(%{circuit: circuit} = assigns, socket) do
     games =
-      Games.list_games() |> Enum.map(fn g -> {g.display_name, g.code |> String.to_atom()} end)
+      Games.list_games() |> Enum.map(fn g -> {g.name, g.id} end)
 
     {:ok,
      socket

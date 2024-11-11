@@ -2,26 +2,30 @@
   Record <%= @record.id %>
   <:subtitle>This is a record record from your database.</:subtitle>
   <:actions>
-    <.link patch={~p"/records/#{@record}/show/edit"} phx-click={JS.push_focus()}>
+    <.link
+      patch={~p"/games/#{@game_code}/records/#{@record}/show/edit"}
+      phx-click={JS.push_focus()}
+    >
       <.button>Edit record</.button>
     </.link>
   </:actions>
 </.header>
 
 <.list>
-  <:item title="User"><%= @record.user %></:item>
+  <:item title="User"><%= @record.user.name %></:item>
   <:item title="Time"><%= @record.time %></:item>
   <:item title="Date"><%= @record.date %></:item>
-  <:item title="Verified"><%= @record.is_verified %></:item>
+  <:item title="DNF (Did not finish)"><%= @record.is_dnf %></:item>
+  <%!-- <:item title="Verified"><%= @record.is_verified %></:item> --%>
 </.list>
 
-<.back navigate={~p"/records"}>Back to records</.back>
+<.back navigate={~p"/games/#{@game_code}/records"}>Back to records</.back>
 
 <.modal
   :if={@live_action == :edit}
   id="record-modal"
   show
-  on_cancel={JS.patch(~p"/records/#{@record}")}
+  on_cancel={JS.patch(~p"/games/#{@game_code}/records/#{@record}")}
 >
   <.live_component
     module={RacingLeaderboardsWeb.RecordLive.FormComponent}
@@ -29,6 +33,7 @@
     title={@page_title}
     action={@live_action}
     record={@record}
-    patch={~p"/records/#{@record}"}
+    game_id={@game_id}
+    patch={~p"/games/#{@game_code}/records/#{@record}"}
   />
 </.modal>

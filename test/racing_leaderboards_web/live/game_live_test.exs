@@ -4,9 +4,19 @@ defmodule RacingLeaderboardsWeb.GameLiveTest do
   import Phoenix.LiveViewTest
   import RacingLeaderboards.GamesFixtures
 
-  @create_attrs %{code: "some code", url: "some url", display_name: "some display_name", image_url: "some image_url"}
-  @update_attrs %{code: "some updated code", url: "some updated url", display_name: "some updated display_name", image_url: "some updated image_url"}
-  @invalid_attrs %{code: nil, url: nil, display_name: nil, image_url: nil}
+  @create_attrs %{
+    code: "some code",
+    url: "some url",
+    name: "some name",
+    image_url: "some image_url"
+  }
+  @update_attrs %{
+    code: "some updated code",
+    url: "some updated url",
+    name: "some updated name",
+    image_url: "some updated image_url"
+  }
+  @invalid_attrs %{code: nil, url: nil, name: nil, image_url: nil}
 
   defp create_game(_) do
     game = game_fixture()

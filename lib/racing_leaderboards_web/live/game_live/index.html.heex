@@ -10,25 +10,15 @@
 <.table
   id="games"
   rows={@streams.games}
-  row_click={fn {_id, game} -> JS.navigate(~p"/games/#{game}") end}
+  row_click={fn {_id, game} -> JS.navigate(~p"/games/#{game.code}/records") end}
 >
-  <:col :let={{_id, game}} label="Display name"><%= game.display_name %></:col>
+  <:col :let={{_id, game}} label="Display name"><%= game.name %></:col>
   <:col :let={{_id, game}} label="Code"><%= game.code %></:col>
-  <:col :let={{_id, game}} label="Url"><%= game.url %></:col>
-  <:col :let={{_id, game}} label="Image url"><%= game.image_url %></:col>
   <:action :let={{_id, game}}>
     <div class="sr-only">
       <.link navigate={~p"/games/#{game}"}>Show</.link>
     </div>
-    <.link patch={~p"/games/#{game}/edit"}>Edit</.link>
-  </:action>
-  <:action :let={{id, game}}>
-    <.link
-      phx-click={JS.push("delete", value: %{id: game.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
-    >
-      Delete
-    </.link>
+    <%!-- <.link patch={~p"/games/#{game}/edit"}>Edit</.link> --%>
   </:action>
 </.table>
 
@@ -42,3 +32,7 @@
     patch={~p"/games"}
   />
 </.modal>
+
+<footer>
+  <a href={~p"/admin"}>Admin</a>
+</footer>
