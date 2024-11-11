@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title suffix=" · Phoenix Framework">
-      <%= assigns[:page_title] || "RacingLeaderboards" %>
+    <.live_title suffix=" · Racing Leaderboards">
+      <%= assigns[:page_title] || "Home" %>
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
@@ -13,5 +13,31 @@
   </head>
   <body class="bg-white px-6 py-8 max-w-screen-md mx-auto">
     <%= @inner_content %>
+    <footer>
+      <p class="font-semibold tracking-wide">Quicklinks / Admin</p>
+      <hr />
+      <div class="flex justify-between items-center">
+        <div>
+          <ul>
+            <li>
+              <.link href={~p"/"}>Home</.link>
+            </li>
+            <li>
+              <.link href={~p"/games"}>Games</.link>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li>
+              <.link href={~p"/users"}>Users</.link>
+            </li>
+            <li>
+              <.link href={~p"/circuits"}>Circuits</.link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

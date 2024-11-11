@@ -19,6 +19,26 @@ defmodule RacingLeaderboards.Records do
   """
   def list_records do
     Repo.all(Record)
+    |> Repo.preload([:user, [circuit: :game], :car])
+  end
+
+  def list_records(%{limit: limit}) do
+    Repo.all(from Record, limit: ^limit, order_by: [asc: :date])
+    |> Repo.preload([:user, :circuit, :car])
+  end
+
+  def list_daily_records(%{limit: limit}) do
+    date = NaiveDateTime.local_now()
+
+    Repo.all(
+      from(r in Record,
+        where:
+          r.date >= ^NaiveDateTime.beginning_of_day(date) and
+            r.date <= ^NaiveDateTime.end_of_day(date),
+        limit: ^limit,
+        order_by: [asc: :date]
+      )
+    )
     |> Repo.preload([:user, :circuit, :car])
   end
 

@@ -7,7 +7,14 @@ defmodule RacingLeaderboardsWeb.RecordLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :records, Records.list_records())}
+    records = Records.list_records()
+
+    grouped_records =
+      records
+      |> Enum.group_by(&{&1.circuit.game.code, &1.date, &1.circuit, &1.car})
+      |> Enum.sort_by(fn {{_game, date, _circuit, _name}, _records} -> date end, :desc)
+
+    {:ok, socket |> assign(grouped_records: grouped_records) |> stream(:records, records)}
   end
 
   @impl true

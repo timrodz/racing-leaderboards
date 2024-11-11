@@ -29,7 +29,7 @@ defmodule RacingLeaderboardsWeb.GameLiveTest do
     test "lists all games", %{conn: conn, game: game} do
       {:ok, _index_live, html} = live(conn, ~p"/games")
 
-      assert html =~ "Listing Games"
+      assert html =~ "Games"
       assert html =~ game.code
     end
 

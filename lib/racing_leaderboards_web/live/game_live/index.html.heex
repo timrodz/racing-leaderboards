@@ -1,5 +1,5 @@
 <.header>
-  Listing Games
+  Games
   <:actions>
     <.link patch={~p"/games/new"}>
       <.button>New Game</.button>
@@ -18,7 +18,15 @@
     <div class="sr-only">
       <.link navigate={~p"/games/#{game}"}>Show</.link>
     </div>
-    <%!-- <.link patch={~p"/games/#{game}/edit"}>Edit</.link> --%>
+    <.link patch={~p"/games/#{game}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, car}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: car.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
   </:action>
 </.table>
 
@@ -32,7 +40,3 @@
     patch={~p"/games"}
   />
 </.modal>
-
-<footer>
-  <a href={~p"/admin"}>Admin</a>
-</footer>

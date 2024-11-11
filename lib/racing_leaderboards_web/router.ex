@@ -18,7 +18,6 @@ defmodule RacingLeaderboardsWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    get "/admin", AdminController, :home
 
     # USERS
     live "/users", UserLive.Index, :index

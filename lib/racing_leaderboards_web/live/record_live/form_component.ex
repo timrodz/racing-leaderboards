@@ -56,6 +56,8 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
 
   @impl true
   def update(%{record: record, game_id: game_id} = assigns, socket) do
+    assigns |> IO.inspect(label: "ASSIGNS")
+
     users =
       [
         {"Select", -1}
