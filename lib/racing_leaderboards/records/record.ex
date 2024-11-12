@@ -19,9 +19,7 @@ defmodule RacingLeaderboards.Records.Record do
   def changeset(record, attrs) do
     record
     |> cast(attrs, [:time, :date, :is_dnf, :is_verified, :user_id, :circuit_id, :car_id])
-    |> IO.inspect(label: "cast")
     |> validate_required([:time, :date, :is_dnf, :user_id, :circuit_id, :car_id])
-    |> IO.inspect(label: "changeset")
     |> validate_user_entry()
     |> validate_time()
   end

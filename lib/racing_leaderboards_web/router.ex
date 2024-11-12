@@ -58,6 +58,13 @@ defmodule RacingLeaderboardsWeb.Router do
 
     live "/games/:game_code/records/:id", RecordLive.Show, :show
     live "/games/:game_code/records/:id/show/edit", RecordLive.Show, :edit
+
+    # RECORDS BY DATE
+    get "/games/:game_code/records/date/:date", DailyChallengeController, :by_date
+    get "/games/:game_code/records/week/:date", DailyChallengeController, :by_week
+
+    get "/games/:game_code/challenge/daily", DailyChallengeController, :daily
+    get "/games/:game_code/challenge/weekly", DailyChallengeController, :weekly
   end
 
   # Other scopes may use custom stacks.

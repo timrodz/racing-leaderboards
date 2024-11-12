@@ -1,46 +1,18 @@
 <.header>
-  Listing Records
+  Records for <%= @game.name %>
   <:actions>
-    <.link patch={
-      ~p"/games/#{@game_code}/records/new?date=#{NaiveDateTime.local_now() |> Date.to_string()}"
-    }>
-      <.button>New Record</.button>
+    <.link patch={~p"/games/#{@game.code}/records/new"}>
+      <.button>Add new entry</.button>
     </.link>
   </:actions>
 </.header>
 
-<div class="space-y-4">
-  <%= for {{game, date, circuit, car}, records} <- @grouped_records do %>
-    <div class="space-y-1">
-      <h2 class=" font-semibold"><%= date %></h2>
-      <h3 class="text-xl">
-        <%= RacingLeaderboardsWeb.Utils.Circuits.country_to_emoji(circuit.country) %> <%= circuit.name %>
-      </h3>
-      <h4 class="text-xl">🏎️ <%= car.name %></h4>
-    </div>
-    <div class="grid grid-cols-3 gap-2">
-      <%= for c <- records do %>
-        <div class="p-2 rounded bg-slate-100">
-          <p><%= c.user.name %></p>
-          <p class="font-mono"><%= c.time %></p>
-        </div>
-      <% end %>
-    </div>
-    <a
-      class="inline-block p-2 bg-indigo-600 text-white rounded"
-      href={
-        ~p"/games/#{game}/records/new?date=#{date |> Date.to_string()}&circuit=#{circuit.id}&car=#{car.id}"
-      }
-    >
-      Add new entry
-    </a>
-  <% end %>
-</div>
-<%!-- 
+<img src={"/images/#{@game.image_url}"} alt={@game.code} class="w-full rounded my-6" />
+
 <.table
   id="records"
   rows={@streams.records}
-  row_click={fn {_id, record} -> JS.navigate(~p"/games/#{@game_code}/records/#{record}") end}
+  row_click={fn {_id, record} -> JS.navigate(~p"/games/#{@game.code}/records/#{record}") end}
 >
   <:col :let={{_id, record}} label="Circuit"><%= record.circuit.name %></:col>
   <:col :let={{_id, record}} label="Car"><%= record.car.name %></:col>
@@ -54,9 +26,9 @@
   </:col>
   <:action :let={{_id, record}}>
     <div class="sr-only">
-      <.link navigate={~p"/games/#{@game_code}/records/#{record}"}>Show</.link>
+      <.link navigate={~p"/games/#{@game.code}/records/#{record}"}>Show</.link>
     </div>
-    <.link patch={~p"/games/#{@game_code}/records/#{record}/edit"}>Edit</.link>
+    <.link patch={~p"/games/#{@game.code}/records/#{record}/edit"}>Edit</.link>
   </:action>
   <:action :let={{id, record}}>
     <.link
@@ -66,7 +38,7 @@
       Delete
     </.link>
   </:action>
-</.table> --%>
+</.table>
 
 <.back navigate={~p"/games"}>Back to games</.back>
 
@@ -74,7 +46,7 @@
   :if={@live_action in [:new, :edit]}
   id="record-modal"
   show
-  on_cancel={JS.patch(~p"/games/#{@game_code}/records")}
+  on_cancel={JS.patch(~p"/games/#{@game.code}/records")}
 >
   <.live_component
     module={RacingLeaderboardsWeb.RecordLive.FormComponent}
@@ -82,7 +54,10 @@
     title={@page_title}
     action={@live_action}
     record={@record}
-    game_id={@game_id}
-    patch={~p"/games/#{@game_code}/records"}
+    game_id={@game.id}
+    date={@date}
+    circuit_id={@circuit_id}
+    car_id={@car_id}
+    patch={~p"/games/#{@game.code}/records"}
   />
 </.modal>

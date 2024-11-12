@@ -86,6 +86,7 @@ defmodule RacingLeaderboardsWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import RacingLeaderboardsWeb.CoreComponents
+      import RacingLeaderboardsWeb.ExtendedCoreComponents
       use Gettext, backend: RacingLeaderboardsWeb.Gettext
 
       # Shortcut for generating JS commands

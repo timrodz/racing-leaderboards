@@ -4,12 +4,32 @@
 
 /* This file is for your main application CSS */
 
-a {
-  @apply hover:underline hover:bg-indigo-50;
+a.cta {
+  @apply inline-block hover:bg-indigo-50 hover:text-indigo-800 text-indigo-700 bg-indigo-100 rounded-md px-4 py-2 text-sm font-semibold hover:underline;
+}
+
+a.cta-red {
+  @apply inline-block hover:bg-red-50 hover:text-red-800 text-red-700 bg-red-100 rounded-md px-4 py-2 text-sm font-semibold hover:underline;
+}
+
+a.cta-green {
+  @apply inline-block hover:bg-green-50 hover:text-green-800 text-green-700 bg-green-100 rounded-md px-4 py-2 text-sm font-semibold hover:underline;
+}
+
+a.cta-yellow {
+  @apply inline-block hover:bg-yellow-50 hover:text-yellow-800 text-yellow-700 bg-yellow-100 rounded-md px-4 py-2 text-sm font-semibold hover:underline;
+}
+
+a.cta-orange {
+  @apply inline-block hover:bg-orange-50 hover:text-orange-800 text-orange-700 bg-orange-100 rounded-md px-4 py-2 text-sm font-semibold hover:underline;
 }
 
 footer {
-  @apply p-4 mt-10 text-sm space-y-2;
+  @apply py-4 text-sm space-y-2 sm:px-6 lg:px-8;
+
+  a {
+    @apply hover:underline hover:bg-indigo-50;
+  }
 
   ul {
     @apply space-y-2;

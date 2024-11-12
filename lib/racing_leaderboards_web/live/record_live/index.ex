@@ -9,21 +9,23 @@ defmodule RacingLeaderboardsWeb.RecordLive.Index do
   def mount(_params, _session, socket) do
     records = Records.list_records()
 
-    grouped_records =
-      records
-      |> Enum.group_by(&{&1.circuit.game.code, &1.date, &1.circuit, &1.car})
-      |> Enum.sort_by(fn {{_game, date, _circuit, _name}, _records} -> date end, :desc)
-
-    {:ok, socket |> assign(grouped_records: grouped_records) |> stream(:records, records)}
+    {:ok,
+     socket
+     |> stream(:records, records)}
   end
 
   @impl true
   def handle_params(params, _url, socket) do
-    game = Games.get_game_by_code!(params["game_code"]) |> IO.inspect()
+    game = Games.get_game_by_code!(params["game_code"])
 
     {:noreply,
      socket
-     |> assign(game_code: game.code, game_id: game.id)
+     |> assign(
+       game: game,
+       date: params["date"],
+       circuit_id: params["circuit"],
+       car_id: params["car"]
+     )
      |> apply_action(socket.assigns.live_action, params)}
   end
 

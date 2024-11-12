@@ -7,28 +7,16 @@
   </:actions>
 </.header>
 
-<.table
+<.item_grid
   id="games"
-  rows={@streams.games}
-  row_click={fn {_id, game} -> JS.navigate(~p"/games/#{game.code}/records") end}
+  items={@streams.games}
+  item_click={fn {_id, game} -> JS.navigate(~p"/games/#{game.code}/records") end}
 >
-  <:col :let={{_id, game}} label="Display name"><%= game.name %></:col>
-  <:col :let={{_id, game}} label="Code"><%= game.code %></:col>
-  <:action :let={{_id, game}}>
-    <div class="sr-only">
-      <.link navigate={~p"/games/#{game}"}>Show</.link>
-    </div>
-    <.link patch={~p"/games/#{game}/edit"}>Edit</.link>
-  </:action>
-  <:action :let={{id, car}}>
-    <.link
-      phx-click={JS.push("delete", value: %{id: car.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
-    >
-      Delete
-    </.link>
-  </:action>
-</.table>
+  <:container :let={{_id, game}} class="flex flex-col justify-between gap-1">
+    <img src={"/images/#{game.image_url}"} alt={game.name} class="rounded" />
+    <p class="font-semibold hover:underline"><%= game.name %></p>
+  </:container>
+</.item_grid>
 
 <.modal :if={@live_action in [:new, :edit]} id="game-modal" show on_cancel={JS.patch(~p"/games")}>
   <.live_component

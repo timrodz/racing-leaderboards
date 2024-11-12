@@ -1,0 +1,58 @@
+<.header>
+  Daily Challenge / <%= @game.name %>
+</.header>
+
+<%= for {{date, circuit, car}, records} <- @grouped_records do %>
+  <.list>
+    <:item title="Date">
+      <%= date %>
+    </:item>
+    <:item title="Circuit">
+      <%= if circuit.country do %>
+        <%= RacingLeaderboardsWeb.Utils.Circuits.country_to_emoji(circuit.country) %> <%= circuit.country %>
+      <% else %>
+        <%= circuit.region %>
+      <% end %>
+      / <%= circuit.name %>
+    </:item>
+    <:item title="Car">
+      <%= car.name %> (<%= car.class %>)
+    </:item>
+  </.list>
+  <.table
+    id="records"
+    rows={records |> Enum.with_index()}
+    row_click={fn {record, _id} -> JS.navigate(~p"/games/#{@game.code}/records/#{record.id}") end}
+  >
+    <:col :let={{_record, index}} label="#"><%= index + 1 %></:col>
+    <:col :let={{record, index}} label="User">
+      <span>
+        <%= if index == 0, do: "🏆" %>
+        <%= record.user.name %>
+      </span>
+    </:col>
+    <:col :let={{record, _index}} label="Time">
+      <%= record.time %> <%= if record.is_dnf, do: "DNF" %>
+    </:col>
+    <:action :let={{record, _index}}>
+      <div class="sr-only">
+        <.link navigate={~p"/games/#{@game.code}/records/#{record}"}>Show</.link>
+      </div>
+      <.link patch={~p"/games/#{@game.code}/records/#{record}/edit"}>Edit</.link>
+    </:action>
+    <:action :let={{record, _index}}>
+      <.link
+        phx-click={JS.push("delete", value: %{id: record.id}) |> hide("##{record.id}")}
+        data-confirm="Are you sure?"
+      >
+        Delete
+      </.link>
+    </:action>
+  </.table>
+  <.link
+    href={"/games/#{@game.code}/records/new?date=#{@date}&circuit=#{circuit.id}&car=#{car.id}"}
+    class="mt-6 inline-block p-2 bg-indigo-600 text-white rounded"
+  >
+    Add record
+  </.link>
+<% end %>
