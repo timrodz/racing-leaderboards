@@ -22,10 +22,6 @@ import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
 
-// CUSTOM IMPORTS
-import { hello } from "./hello";
-// !CUSTOM IMPORTS
-
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
@@ -47,5 +43,3 @@ liveSocket.connect();
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket;
-
-document.querySelector("section.phx-hero h1").innerHTML = hello("Phoenix");
