@@ -1,8 +1,11 @@
 <.header>
-  Listing Circuits
+  Circuits - <%= @game.name %>
   <:actions>
-    <.link patch={~p"/circuits/new"}>
-      <.button>New Circuit</.button>
+    <.link patch={~p"/games/#{@game.code}/circuits/new"} class="cta">
+      New Circuit
+    </.link>
+    <.link href={~p"/games/#{@game.code}"} class="cta-yellow">
+      Game page
     </.link>
   </:actions>
 </.header>
@@ -10,7 +13,7 @@
 <.table
   id="circuits"
   rows={@streams.circuits}
-  row_click={fn {_id, circuit} -> JS.navigate(~p"/circuits/#{circuit}") end}
+  row_click={fn {_id, circuit} -> JS.navigate(~p"/games/#{@game.code}/circuits/#{circuit}") end}
 >
   <:col :let={{_id, circuit}} label="Circuit">
     <%= if (not is_nil circuit.country) and (circuit.country != "") do %>
@@ -23,9 +26,9 @@
   <:col :let={{_id, circuit}} label="Distance (Km)"><%= circuit.distance %> Km</:col>
   <:action :let={{_id, circuit}}>
     <div class="sr-only">
-      <.link navigate={~p"/circuits/#{circuit}"}>Show</.link>
+      <.link navigate={~p"/games/#{@game.code}/circuits/#{circuit}"}>Show</.link>
     </div>
-    <.link patch={~p"/circuits/#{circuit}/edit"}>Edit</.link>
+    <.link patch={~p"/games/#{@game.code}/circuits/#{circuit}/edit"}>Edit</.link>
   </:action>
 </.table>
 
@@ -33,7 +36,7 @@
   :if={@live_action in [:new, :edit]}
   id="circuit-modal"
   show
-  on_cancel={JS.patch(~p"/circuits")}
+  on_cancel={JS.patch(~p"/games/#{@game.code}/circuits")}
 >
   <.live_component
     module={RacingLeaderboardsWeb.CircuitLive.FormComponent}
@@ -41,6 +44,6 @@
     title={@page_title}
     action={@live_action}
     circuit={@circuit}
-    patch={~p"/circuits"}
+    patch={~p"/games/#{@game.code}/circuits"}
   />
 </.modal>

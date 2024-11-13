@@ -5,8 +5,9 @@
     <.link
       patch={~p"/games/#{@game.code}/records/#{@record}/show/edit"}
       phx-click={JS.push_focus()}
+      class="cta"
     >
-      <.button>Edit record</.button>
+      Edit record
     </.link>
     <.link phx-click={JS.push("delete", value: %{id: @record.id})} data-confirm="Are you sure?">
       Delete

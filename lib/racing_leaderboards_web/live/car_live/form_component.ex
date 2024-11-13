@@ -8,7 +8,7 @@ defmodule RacingLeaderboardsWeb.CarLive.FormComponent do
     ~H"""
     <div>
       <.header>
-        <%= @title %> / <%= @game.name %>
+        <%= @title %> / <%= @game_name %>
         <:subtitle>Use this form to manage car records in your database.</:subtitle>
       </.header>
 
@@ -21,6 +21,7 @@ defmodule RacingLeaderboardsWeb.CarLive.FormComponent do
       >
         <.input field={@form[:name]} type="text" label="Name" />
         <.input field={@form[:class]} type="text" label="Class" />
+        <.input field={@form[:sub_class]} type="text" label="Sub-class" />
         <.input field={@form[:horsepower]} type="text" label="Horsepower" />
         <.input field={@form[:weight]} type="text" label="Weight" />
         <.input field={@form[:powertrain_type]} type="text" label="Powertrain type" />
@@ -52,7 +53,11 @@ defmodule RacingLeaderboardsWeb.CarLive.FormComponent do
   end
 
   def handle_event("save", %{"car" => car_params}, socket) do
-    save_car(socket, socket.assigns.action, car_params)
+    save_car(
+      socket,
+      socket.assigns.action,
+      car_params |> Map.put(:game_id, socket.assigns.game_id)
+    )
   end
 
   defp save_car(socket, :edit, car_params) do

@@ -10,7 +10,7 @@
   <%= for g <- @games do %>
     <div class="space-y-5">
       <div>
-        <.link href={"/games/#{g.code}/records"} class="rounded">
+        <.link href={"/games/#{g.code}"} class="rounded">
           <img src={"/images/#{g.image_url}"} alt={g.name} class="rounded" />
         </.link>
       </div>

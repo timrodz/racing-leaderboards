@@ -1,19 +1,30 @@
 <.header>
-  Game <%= @game.id %>
-  <:subtitle>This is a game record from your database.</:subtitle>
+  <%= @game.name %>
   <:actions>
-    <.link patch={~p"/games/#{@game}/show/edit"} phx-click={JS.push_focus()}>
-      <.button>Edit game</.button>
+    <.link patch={~p"/games/#{@game}/show/edit"} phx-click={JS.push_focus()} class="cta">
+      Edit game
     </.link>
   </:actions>
 </.header>
 
-<.list>
-  <:item title="Display name"><%= @game.name %></:item>
-  <:item title="Code"><%= @game.code %></:item>
-  <:item title="Url"><%= @game.url %></:item>
-  <:item title="Image url"><%= @game.image_url %></:item>
-</.list>
+<div class="my-6 flex flex-col gap-2">
+  <img src={"/images/#{@game.image_url}"} alt={@game.name} class="rounded" />
+  <.link href={~p"/games/#{@game.code}/challenge/daily"} class="cta-green">
+    Daily challenge
+  </.link>
+  <.link href={~p"/games/#{@game.code}/challenge/weekly"} class="cta">
+    Weekly challenge
+  </.link>
+  <.link href={~p"/games/#{@game.code}/records"} class="cta-orange">
+    Records
+  </.link>
+  <.link href={~p"/games/#{@game.code}/circuits"} class="cta-yellow">
+    Circuits
+  </.link>
+  <.link href={~p"/games/#{@game.code}/cars"} class="cta-yellow">
+    Cars
+  </.link>
+</div>
 
 <.back navigate={~p"/games"}>Back to games</.back>
 

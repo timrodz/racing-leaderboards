@@ -30,10 +30,10 @@ defmodule RacingLeaderboardsWeb.Router do
     # GAMES
     live "/games", GameLive.Index, :index
     live "/games/new", GameLive.Index, :new
-    live "/games/:id/edit", GameLive.Index, :edit
+    live "/games/:game_code/edit", GameLive.Index, :edit
 
-    live "/games/:id", GameLive.Show, :show
-    live "/games/:id/show/edit", GameLive.Show, :edit
+    live "/games/:game_code", GameLive.Show, :show
+    live "/games/:game_code/show/edit", GameLive.Show, :edit
 
     # CIRCUITS
     live "/games/:game_code/circuits", CircuitLive.Index, :index

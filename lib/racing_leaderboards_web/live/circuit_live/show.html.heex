@@ -2,8 +2,8 @@
   Circuit <%= @circuit.id %>
   <:subtitle>This is a circuit record from your database.</:subtitle>
   <:actions>
-    <.link patch={~p"/circuits/#{@circuit}/show/edit"} phx-click={JS.push_focus()}>
-      <.button>Edit circuit</.button>
+    <.link patch={~p"/circuits/#{@circuit}/show/edit"} phx-click={JS.push_focus()} class="cta">
+      Edit circuit
     </.link>
   </:actions>
 </.header>

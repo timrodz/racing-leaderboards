@@ -14,10 +14,10 @@ defmodule RacingLeaderboardsWeb.GameLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit, %{"id" => id}) do
+  defp apply_action(socket, :edit, %{"game_code" => code}) do
     socket
     |> assign(:page_title, "Edit Game")
-    |> assign(:game, Games.get_game!(id))
+    |> assign(:game, Games.get_game!(code))
   end
 
   defp apply_action(socket, :new, _params) do

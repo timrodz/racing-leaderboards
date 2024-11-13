@@ -2,6 +2,13 @@
   Weekly Challenge / <%= @game.name %>
 </.header>
 
+<div class="my-6 space-y-2">
+  <img src={"/images/#{@game.image_url}"} alt={@game.code} class="w-full rounded" />
+  <.link href={~p"/games/#{@game.code}"} class="cta-green">
+    Game page
+  </.link>
+</div>
+
 <%= if not Enum.empty?(@grouped_records) do %>
   <%= for {{date, circuit, car}, records} <- @grouped_records do %>
     <.grouped_records
@@ -25,11 +32,8 @@
     />
   <% end %>
 <% else %>
-  <p>No records found for this date—Be the first to add one!</p>
-  <.link
-    href={~p"/games/#{@game.code}/records/new?redirect_to=#{@conn.request_path}"}
-    class="mt-6 inline-block p-2 bg-indigo-600 text-white rounded"
-  >
+  <p>No records found for this week—Be the first to add one!</p>
+  <.link href={~p"/games/#{@game.code}/records/new?redirect_to=#{@conn.request_path}"} class="cta">
     Add record
   </.link>
 <% end %>

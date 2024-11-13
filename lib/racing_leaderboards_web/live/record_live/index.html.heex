@@ -1,24 +1,16 @@
 <.header>
-  Records for <%= @game.name %>
+  Records - <%= @game.name %>
   <:actions>
-    <.link patch={~p"/games/#{@game.code}/records/new"}>
-      <.button>Add new entry</.button>
+    <.link patch={~p"/games/#{@game.code}/records/new"} class="cta">
+      New Record
+    </.link>
+    <.link href={~p"/games/#{@game.code}"} class="cta-yellow">
+      Game page
     </.link>
   </:actions>
 </.header>
 
 <img src={"/images/#{@game.image_url}"} alt={@game.code} class="w-full rounded my-6" />
-
-<div>
-  <.link href={~p"/games/#{@game.code}/challenge/daily"} class="cta-green">
-    Daily challenge
-  </.link>
-  <.link href={~p"/games/#{@game.code}/challenge/weekly"} class="cta">
-    Weekly challenge
-  </.link>
-</div>
-
-<h2 class="mt-6 text-2xl text-brand">Records</h2>
 
 <.table
   id="records"

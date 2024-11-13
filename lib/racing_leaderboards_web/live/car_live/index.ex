@@ -1,12 +1,18 @@
 defmodule RacingLeaderboardsWeb.CarLive.Index do
+  alias RacingLeaderboards.Games
   use RacingLeaderboardsWeb, :live_view
 
   alias RacingLeaderboards.Cars
   alias RacingLeaderboards.Cars.Car
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, stream(socket, :cars, Cars.list_cars())}
+  def mount(%{"game_code" => game_code}, _session, socket) do
+    game = Games.get_game_by_code!(game_code)
+
+    {:ok,
+     socket
+     |> assign(game: game)
+     |> stream(:cars, Cars.list_cars())}
   end
 
   @impl true

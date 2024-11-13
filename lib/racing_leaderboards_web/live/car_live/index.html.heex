@@ -1,8 +1,11 @@
 <.header>
-  Listing Cars
+  Cars - <%= @game.name %>
   <:actions>
-    <.link patch={~p"/cars/new"}>
-      <.button>New Car</.button>
+    <.link patch={~p"/games/#{@game.code}/cars/new"} class="cta">
+      New Car
+    </.link>
+    <.link href={~p"/games/#{@game.code}"} class="cta-yellow">
+      Game page
     </.link>
   </:actions>
 </.header>
@@ -10,16 +13,15 @@
 <.table
   id="cars"
   rows={@streams.cars}
-  row_click={fn {_id, car} -> JS.navigate(~p"/cars/#{car}") end}
+  row_click={fn {_id, car} -> JS.navigate(~p"/games/#{@game.code}/cars/#{car}") end}
 >
-  <:col :let={{_id, car}} label="Game"><%= car.game.name %></:col>
   <:col :let={{_id, car}} label="Name"><%= car.name %></:col>
   <:col :let={{_id, car}} label="Class"><%= car.class %> / <%= car.sub_class %></:col>
   <:action :let={{_id, car}}>
     <div class="sr-only">
-      <.link navigate={~p"/cars/#{car}"}>Show</.link>
+      <.link navigate={~p"/games/#{@game.code}/cars/#{car}"}>Show</.link>
     </div>
-    <.link patch={~p"/cars/#{car}/edit"}>Edit</.link>
+    <.link patch={~p"/games/#{@game.code}/cars/#{car}/edit"}>Edit</.link>
   </:action>
   <:action :let={{id, car}}>
     <.link
@@ -31,13 +33,20 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="car-modal" show on_cancel={JS.patch(~p"/cars")}>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="car-modal"
+  show
+  on_cancel={JS.patch(~p"/games/#{@game.code}/cars")}
+>
   <.live_component
     module={RacingLeaderboardsWeb.CarLive.FormComponent}
     id={@car.id || :new}
     title={@page_title}
     action={@live_action}
     car={@car}
-    patch={~p"/cars"}
+    game_id={@game.id}
+    game_name={@game.name}
+    patch={~p"/games/#{@game.code}/cars"}
   />
 </.modal>

@@ -9,11 +9,11 @@ defmodule RacingLeaderboardsWeb.GameLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id}, _, socket) do
+  def handle_params(%{"game_code" => code}, _, socket) do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:game, Games.get_game!(id))}
+     |> assign(:game, Games.get_game_by_code!(code))}
   end
 
   defp page_title(:show), do: "Show Game"

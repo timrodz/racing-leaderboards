@@ -55,7 +55,7 @@ defmodule RacingLeaderboardsWeb.ExtendedCoreComponents do
         <%= record.time %> <%= if record.is_dnf, do: "DNF" %>
       </:col>
     </.table>
-    <.link href={@add_new_record_link} class="mt-6 inline-block p-2 bg-indigo-600 text-white rounded">
+    <.link href={@add_new_record_link} class="cta">
       Add record
     </.link>
     """
