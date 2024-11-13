@@ -8,6 +8,7 @@ defmodule RacingLeaderboards.Records.Record do
     field :is_dnf, :boolean, default: false
     field :is_verified, :boolean, default: false
 
+    belongs_to :game, RacingLeaderboards.Games.Game
     belongs_to :user, RacingLeaderboards.Users.User
     belongs_to :circuit, RacingLeaderboards.Circuits.Circuit
     belongs_to :car, RacingLeaderboards.Cars.Car
@@ -18,17 +19,20 @@ defmodule RacingLeaderboards.Records.Record do
   @doc false
   def changeset(record, attrs) do
     record
-    |> cast(attrs, [:time, :date, :is_dnf, :is_verified, :user_id, :circuit_id, :car_id])
-    |> validate_required([:time, :date, :is_dnf, :user_id, :circuit_id, :car_id])
-    |> validate_user_entry()
+    |> cast(attrs, [:time, :date, :is_dnf, :is_verified, :game_id, :user_id, :circuit_id, :car_id])
+    |> validate_required([:time, :date, :is_dnf, :game_id, :user_id, :circuit_id, :car_id])
+    |> validate_select(:user_id, "Please select an user")
+    |> validate_select(:circuit_id, "Please select a circuit")
+    |> validate_select(:car_id, "Please select a car")
     |> validate_time()
   end
 
-  defp validate_user_entry(changeset) do
-    user_id = get_field(changeset, :user_id)
+  defp validate_select(changeset, field, error) do
+    id = get_field(changeset, field)
 
-    case user_id do
-      -1 -> add_error(changeset, :user_id, "Please select an user")
+    case id do
+      # -1 means it's not found in the select options
+      -1 -> add_error(changeset, field, error)
       _ -> changeset
     end
   end

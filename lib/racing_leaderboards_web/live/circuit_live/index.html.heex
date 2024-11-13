@@ -12,9 +12,6 @@
   rows={@streams.circuits}
   row_click={fn {_id, circuit} -> JS.navigate(~p"/circuits/#{circuit}") end}
 >
-  <:col :let={{_id, circuit}} label="Game">
-    <%= @games[circuit.game_id].name %>
-  </:col>
   <:col :let={{_id, circuit}} label="Circuit">
     <%= if (not is_nil circuit.country) and (circuit.country != "") do %>
       <%= RacingLeaderboardsWeb.Utils.Circuits.country_to_emoji(circuit.country) %>

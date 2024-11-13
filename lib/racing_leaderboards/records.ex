@@ -70,6 +70,35 @@ defmodule RacingLeaderboards.Records do
     |> Repo.preload([:user, :circuit, :car])
   end
 
+  def list_records_by_game_date(game_id, date) do
+    Repo.all(
+      from(r in Record,
+        where: r.game_id == ^game_id and r.date == ^date,
+        order_by: [asc: :time]
+      )
+    )
+    |> Repo.preload([:user, :circuit, :car])
+  end
+
+  def list_records_by_game_week(game_id, date_string) do
+    date =
+      case Date.from_iso8601(date_string) do
+        {:ok, parsed_date} -> parsed_date
+        _ -> NaiveDateTime.local_now() |> NaiveDateTime.to_date()
+      end
+
+    Repo.all(
+      from(r in Record,
+        where:
+          r.game_id == ^game_id and
+            r.date >= ^Date.beginning_of_week(date) and
+            r.date <= ^Date.end_of_week(date),
+        order_by: [asc: :date, asc: :time]
+      )
+    )
+    |> Repo.preload([:user, :circuit, :car])
+  end
+
   @doc """
   Gets a single record.
 

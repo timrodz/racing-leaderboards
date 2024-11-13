@@ -8,7 +8,7 @@ defmodule RacingLeaderboardsWeb.CarLive.FormComponent do
     ~H"""
     <div>
       <.header>
-        <%= @title %>
+        <%= @title %> / <%= @game.name %>
         <:subtitle>Use this form to manage car records in your database.</:subtitle>
       </.header>
 

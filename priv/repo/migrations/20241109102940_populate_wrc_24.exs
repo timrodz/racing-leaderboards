@@ -54,6 +54,7 @@ defmodule RacingLeaderboards.Repo.Migrations.PopulateWrc24 do
                 game_id: game.id,
                 name: vehicle,
                 class: class,
+                sub_class: type,
                 inserted_at: now,
                 updated_at: now
               }

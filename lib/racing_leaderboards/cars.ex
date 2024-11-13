@@ -18,7 +18,7 @@ defmodule RacingLeaderboards.Cars do
 
   """
   def list_cars do
-    Repo.all(Car)
+    Repo.all(Car) |> Repo.preload(:game)
   end
 
   def list_cars_by_game(id) do

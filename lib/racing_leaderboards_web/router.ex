@@ -36,20 +36,20 @@ defmodule RacingLeaderboardsWeb.Router do
     live "/games/:id/show/edit", GameLive.Show, :edit
 
     # CIRCUITS
-    live "/circuits", CircuitLive.Index, :index
-    live "/circuits/new", CircuitLive.Index, :new
-    live "/circuits/:id/edit", CircuitLive.Index, :edit
+    live "/games/:game_code/circuits", CircuitLive.Index, :index
+    live "/games/:game_code/circuits/new", CircuitLive.Index, :new
+    live "/games/:game_code/circuits/:id/edit", CircuitLive.Index, :edit
 
-    live "/circuits/:id", CircuitLive.Show, :show
-    live "/circuits/:id/show/edit", CircuitLive.Show, :edit
+    live "/games/:game_code/circuits/:id", CircuitLive.Show, :show
+    live "/games/:game_code/circuits/:id/show/edit", CircuitLive.Show, :edit
 
     # CARS
-    live "/cars", CarLive.Index, :index
-    live "/cars/new", CarLive.Index, :new
-    live "/cars/:id/edit", CarLive.Index, :edit
+    live "/games/:game_code/cars", CarLive.Index, :index
+    live "/games/:game_code/cars/new", CarLive.Index, :new
+    live "/games/:game_code/cars/:id/edit", CarLive.Index, :edit
 
-    live "/cars/:id", CarLive.Show, :show
-    live "/cars/:id/show/edit", CarLive.Show, :edit
+    live "/games/:game_code/cars/:id", CarLive.Show, :show
+    live "/games/:game_code/cars/:id/show/edit", CarLive.Show, :edit
 
     # RECORDS
     live "/games/:game_code/records", RecordLive.Index, :index
@@ -60,11 +60,11 @@ defmodule RacingLeaderboardsWeb.Router do
     live "/games/:game_code/records/:id/show/edit", RecordLive.Show, :edit
 
     # RECORDS BY DATE
-    get "/games/:game_code/records/date/:date", DailyChallengeController, :by_date
-    get "/games/:game_code/records/week/:date", DailyChallengeController, :by_week
+    get "/games/:game_code/records/date/:date", RecordsForGameController, :by_date
+    get "/games/:game_code/records/week/:date", RecordsForGameController, :by_week
 
-    get "/games/:game_code/challenge/daily", DailyChallengeController, :daily
-    get "/games/:game_code/challenge/weekly", DailyChallengeController, :weekly
+    get "/games/:game_code/challenge/daily", RecordsForGameController, :daily
+    get "/games/:game_code/challenge/weekly", RecordsForGameController, :weekly
   end
 
   # Other scopes may use custom stacks.

@@ -5,14 +5,14 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
 
   alias RacingLeaderboards.Users
   alias RacingLeaderboards.Records
+  alias RacingLeaderboardsWeb.Utils.Circuits, as: CircuitUtils
 
   @impl true
   def render(assigns) do
     ~H"""
     <div>
       <.header>
-        <%= @title %>
-        <:subtitle>Use this form to manage record records in your database.</:subtitle>
+        <%= @title %> - <%= @game_name %>
       </.header>
 
       <.simple_form
@@ -22,18 +22,11 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input
-          field={@form[:user_id]}
-          type="select"
-          label="User"
-          options={@users}
-          value={@selected_user_id}
-        />
+        <.input field={@form[:date]} type="date" label="Date" value={@selected_date_id} />
         <.input
           field={@form[:circuit_id]}
           type="select"
           label="Circuit"
-          disabled={@is_redirect?}
           options={@circuits}
           value={@selected_circuit_id}
         />
@@ -41,19 +34,18 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
           field={@form[:car_id]}
           type="select"
           label="Car"
-          disabled={@is_redirect?}
           options={@cars}
           value={@selected_car_id}
         />
+        <.input
+          field={@form[:user_id]}
+          type="select"
+          label="User"
+          options={@users}
+          value={@selected_user_id}
+        />
         <.input field={@form[:time]} type="text" label="Time (mm:ss)" placeholder="2:18.813" />
         <.input field={@form[:is_dnf]} type="checkbox" label="DNF (Did not finish)" />
-        <.input
-          field={@form[:date]}
-          type="date"
-          label="Date"
-          disabled={@is_redirect?}
-          value={@selected_date_id}
-        />
         <:actions>
           <.button phx-disable-with="Saving...">Save Record</.button>
         </:actions>
@@ -63,8 +55,12 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
   end
 
   defp circuit_to_select(circuit) do
-    {"#{if circuit.country != "", do: circuit.country, else: circuit.region}: #{circuit.name}",
+    {"#{if circuit.country != "", do: "#{CircuitUtils.country_to_emoji(circuit.country)} #{circuit.country}", else: "#{circuit.region}"} / #{circuit.name}",
      circuit.id}
+  end
+
+  defp car_to_select(car) do
+    {"#{car.class} - #{car.sub_class} / #{car.name}", car.id}
   end
 
   @impl true
@@ -100,7 +96,7 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
       [
         {"Select", -1}
         | Cars.list_cars_by_game(game_id)
-          |> Enum.map(&{&1.name, &1.id})
+          |> Enum.map(&car_to_select(&1))
       ]
 
     selected_user_id =
@@ -126,14 +122,16 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
 
     selected_date_id =
       record.date ||
-        case Date.from_iso8601(date || "") do
+        case Date.from_iso8601(
+               date || NaiveDateTime.local_now() |> NaiveDateTime.to_date() |> Date.to_string()
+             ) do
           {:ok, d} -> d
           _ -> nil
         end
 
     {:ok,
      socket
-     |> assign(assigns)
+     |> assign(assigns |> IO.inspect(label: "FORM ASSIGNS"))
      |> assign(
        users: users,
        circuits: circuits,
@@ -150,7 +148,6 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
          |> Map.put(:date, selected_date_id)
          |> Map.put(:circuit_id, selected_circuit_id)
          |> Map.put(:car_id, selected_car_id)
-         |> IO.inspect(label: "RECORD")
          |> Records.change_record()
        )
      end)}
@@ -188,7 +185,11 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
   end
 
   def handle_event("save", %{"record" => record_params}, socket) do
-    save_record(socket, socket.assigns.action, record_params)
+    save_record(
+      socket,
+      socket.assigns.action,
+      record_params |> Map.put("game_id", socket.assigns.game_id)
+    )
   end
 
   defp save_record(socket, :edit, record_params) do
@@ -196,10 +197,7 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
       {:ok, record} ->
         notify_parent({:saved, record})
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "Record updated successfully")
-         |> push_patch(to: socket.assigns.redirect_to || socket.assigns.patch)}
+        redirect_to(socket)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, form: to_form(changeset))}
@@ -211,15 +209,29 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
       {:ok, record} ->
         notify_parent({:saved, record})
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "Record created successfully")
-         |> push_patch(to: socket.assigns.redirect_to || socket.assigns.patch)}
+        redirect_to(socket)
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        IO.puts("ERROR")
         {:noreply, assign(socket, form: to_form(changeset))}
     end
   end
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+
+  defp redirect_to(socket) do
+    case socket.assigns.redirect_to do
+      nil ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Record created successfully")
+         |> push_patch(to: socket.assigns.patch)}
+
+      _ ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Record created successfully")
+         |> push_navigate(to: socket.assigns.redirect_to, replace: true)}
+    end
+  end
 end

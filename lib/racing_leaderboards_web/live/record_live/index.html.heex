@@ -9,6 +9,17 @@
 
 <img src={"/images/#{@game.image_url}"} alt={@game.code} class="w-full rounded my-6" />
 
+<div>
+  <.link href={~p"/games/#{@game.code}/challenge/daily"} class="cta-green">
+    Daily challenge
+  </.link>
+  <.link href={~p"/games/#{@game.code}/challenge/weekly"} class="cta">
+    Weekly challenge
+  </.link>
+</div>
+
+<h2 class="mt-6 text-2xl text-brand">Records</h2>
+
 <.table
   id="records"
   rows={@streams.records}
@@ -55,9 +66,12 @@
     action={@live_action}
     record={@record}
     game_id={@game.id}
+    game_name={@game.name}
     date={@date}
+    user_id={@user_id}
     circuit_id={@circuit_id}
     car_id={@car_id}
+    redirect_to={@redirect_to}
     patch={~p"/games/#{@game.code}/records"}
   />
 </.modal>

@@ -23,8 +23,10 @@ defmodule RacingLeaderboardsWeb.RecordLive.Index do
      |> assign(
        game: game,
        date: params["date"],
+       user_id: params["user"],
        circuit_id: params["circuit"],
-       car_id: params["car"]
+       car_id: params["car"],
+       redirect_to: params["redirect_to"]
      )
      |> apply_action(socket.assigns.live_action, params)}
   end

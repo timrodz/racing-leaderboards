@@ -6,11 +6,12 @@ defmodule RacingLeaderboardsWeb.CircuitLive.Index do
   alias RacingLeaderboards.Circuits.Circuit
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(params, _session, socket) do
+    game = Games.get_game_by_code!(params["game_code"])
+
     {:ok,
      socket
-     |> assign(games: Games.list_games() |> Enum.into(%{}, fn game -> {game.id, game} end))
-     |> stream(:circuits, Circuits.list_circuits())}
+     |> stream(:circuits, Circuits.list_circuits_by_game(game.id))}
   end
 
   @impl true

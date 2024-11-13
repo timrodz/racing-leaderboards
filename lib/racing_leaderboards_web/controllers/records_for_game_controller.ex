@@ -1,4 +1,4 @@
-defmodule RacingLeaderboardsWeb.DailyChallengeController do
+defmodule RacingLeaderboardsWeb.RecordsForGameController do
   alias RacingLeaderboards.Records
   alias RacingLeaderboards.Games
   use RacingLeaderboardsWeb, :controller
@@ -25,7 +25,7 @@ defmodule RacingLeaderboardsWeb.DailyChallengeController do
     game =
       Games.get_game_by_code!(game_code)
 
-    records = Records.list_records_by_date(date)
+    records = Records.list_records_by_game_date(game.id, date)
 
     grouped_records =
       records
@@ -34,7 +34,6 @@ defmodule RacingLeaderboardsWeb.DailyChallengeController do
     %{
       game: game,
       date: date,
-      records: records,
       grouped_records: grouped_records
     }
   end
@@ -43,7 +42,7 @@ defmodule RacingLeaderboardsWeb.DailyChallengeController do
     game =
       Games.get_game_by_code!(game_code)
 
-    records = Records.list_records_by_week(date)
+    records = Records.list_records_by_game_week(game.id, date)
 
     grouped_records =
       records
@@ -53,11 +52,19 @@ defmodule RacingLeaderboardsWeb.DailyChallengeController do
         :desc
       )
 
+    grouped_records_by_date =
+      records
+      # |> Enum.group_by(&{&1.circuit, &1.car})
+      # |> Enum.group_by(fn {{circuit, car}, records} ->
+      #   records |> Enum.group_by(fn r -> r.date end)
+      # end)
+      |> Enum.group_by(&{&1.circuit, &1.car})
+      |> IO.inspect(label: "HI")
+
     %{
       game: game,
-      date: date,
-      records: records,
-      grouped_records: grouped_records
+      grouped_records: grouped_records,
+      grouped_records_by_date: grouped_records_by_date
     }
   end
 end

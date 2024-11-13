@@ -3,10 +3,13 @@
   <:subtitle>This is a record record from your database.</:subtitle>
   <:actions>
     <.link
-      patch={~p"/games/#{@game_code}/records/#{@record}/show/edit"}
+      patch={~p"/games/#{@game.code}/records/#{@record}/show/edit"}
       phx-click={JS.push_focus()}
     >
       <.button>Edit record</.button>
+    </.link>
+    <.link phx-click={JS.push("delete", value: %{id: @record.id})} data-confirm="Are you sure?">
+      Delete
     </.link>
   </:actions>
 </.header>
@@ -18,13 +21,13 @@
   <:item title="DNF (Did not finish)"><%= @record.is_dnf %></:item>
 </.list>
 
-<.back navigate={~p"/games/#{@game_code}/records"}>Back to records</.back>
+<.back navigate={~p"/games/#{@game.code}/records"}>Back to records</.back>
 
 <.modal
   :if={@live_action == :edit}
   id="record-modal"
   show
-  on_cancel={JS.patch(~p"/games/#{@game_code}/records/#{@record}")}
+  on_cancel={JS.patch(~p"/games/#{@game.code}/records/#{@record}")}
 >
   <.live_component
     module={RacingLeaderboardsWeb.RecordLive.FormComponent}
@@ -32,7 +35,13 @@
     title={@page_title}
     action={@live_action}
     record={@record}
-    game_id={@game_id}
-    patch={~p"/games/#{@game_code}/records/#{@record}"}
+    game_id={@game.id}
+    game_name={@game.name}
+    date={nil}
+    user_id={nil}
+    circuit_id={nil}
+    car_id={nil}
+    redirect_to={nil}
+    patch={~p"/games/#{@game.code}/records/#{@record}"}
   />
 </.modal>

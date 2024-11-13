@@ -5,6 +5,7 @@ defmodule RacingLeaderboards.Cars.Car do
   schema "cars" do
     field :name, :string
     field :class, :string
+    field :sub_class, :string
     field :horsepower, :string
     field :weight, :string
     field :powertrain_type, :string
@@ -24,6 +25,7 @@ defmodule RacingLeaderboards.Cars.Car do
     |> cast(attrs, [
       :name,
       :class,
+      :sub_class,
       :horsepower,
       :weight,
       :powertrain_type,

@@ -1,36 +1,63 @@
 defmodule RacingLeaderboardsWeb.ExtendedCoreComponents do
   use Phoenix.Component
 
-  alias RacingLeaderboardsWeb.CoreComponents
+  import RacingLeaderboardsWeb.CoreComponents
+
   alias RacingLeaderboards.DateUtils
 
-  attr(:grouped_records, :list, required: true)
+  use Gettext, backend: RacingLeaderboardsWeb.Gettext
+
+  attr(:records, :list, required: true)
+  attr(:request_path, :string, required: true)
+  attr(:date, :string, required: true)
+
+  attr(:circuit_id, :string, required: true)
+  attr(:circuit_country, :string, required: true)
+  attr(:circuit_region, :string, required: true)
+  attr(:circuit_name, :string, required: true)
+
+  attr(:game_code, :string, required: true)
+
+  attr(:car_id, :string, required: true)
+  attr(:car_name, :string, required: true)
+  attr(:car_class, :string, required: true)
+
+  attr :record_click, :any, required: true, doc: "the function for handling phx-click on each row"
+  attr :add_new_record_link, :string, required: true
 
   def grouped_records(assigns) do
     ~H"""
-    <%= for {{game, date, circuit, car}, records} <- @grouped_records do %>
-      <div class="space-y-1">
-        <h2 class=" font-semibold"><%= date %></h2>
-        <h3 class="text-xl">
-          <%= RacingLeaderboardsWeb.Utils.Circuits.country_to_emoji(circuit.country) %> <%= circuit.name %>
-        </h3>
-        <h4 class="text-xl">🏎️ <%= car.name %></h4>
-      </div>
-      <div class="grid grid-cols-3 gap-2">
-        <%= for c <- records do %>
-          <div class="p-2 rounded bg-slate-100">
-            <p><%= c.user.name %></p>
-            <p class="font-mono"><%= c.time %></p>
-          </div>
+    <.list>
+      <:item title="Date">
+        <%= @date %>
+      </:item>
+      <:item title="Circuit">
+        <%= if @circuit_country do %>
+          <%= RacingLeaderboardsWeb.Utils.Circuits.country_to_emoji(@circuit_country) %> <%= @circuit_country %>
+        <% else %>
+          <%= @circuit_region %>
         <% end %>
-      </div>
-      <.link
-        href={"/games/#{game}/records/new?date=#{date}&circuit=#{circuit.id}&car=#{car.id}"}
-        class="inline-block p-2 bg-indigo-600 text-white rounded"
-      >
-        Add new entry
-      </.link>
-    <% end %>
+        / <%= @circuit_name %>
+      </:item>
+      <:item title="Car">
+        <%= @car_name %> (<%= @car_class %>)
+      </:item>
+    </.list>
+    <.table id="records" rows={@records |> Enum.with_index()} row_click={@record_click}>
+      <:col :let={{_record, index}} label="#"><%= index + 1 %></:col>
+      <:col :let={{record, index}} label="User">
+        <span>
+          <%= if index == 0, do: "🏆" %>
+          <%= record.user.name %>
+        </span>
+      </:col>
+      <:col :let={{record, _index}} label="Time">
+        <%= record.time %> <%= if record.is_dnf, do: "DNF" %>
+      </:col>
+    </.table>
+    <.link href={@add_new_record_link} class="mt-6 inline-block p-2 bg-indigo-600 text-white rounded">
+      Add record
+    </.link>
     """
   end
 

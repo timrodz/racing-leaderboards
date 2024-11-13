@@ -15,7 +15,7 @@ defmodule RacingLeaderboards.Repo.Migrations.PopulateGames do
         code: "dirt-rally-2.0",
         name: "DiRT Rally 2.0",
         url: "https://dirtrally2.dirtgame.com/",
-        image_url: "/thumbnails/dirt-rally-2.0",
+        image_url: "thumbnails/dirt-rally-2.0.jpg",
         inserted_at: now,
         updated_at: now
       },
@@ -23,7 +23,7 @@ defmodule RacingLeaderboards.Repo.Migrations.PopulateGames do
         code: "wrc-24",
         name: "EA SPORTS™ WRC 24",
         url: "https://www.ea.com/games/ea-sports-wrc/wrc-24",
-        image_url: "/thumbnails/wrc-24",
+        image_url: "thumbnails/wrc-24.png",
         inserted_at: now,
         updated_at: now
       }

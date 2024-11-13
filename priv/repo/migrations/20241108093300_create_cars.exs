@@ -5,6 +5,7 @@ defmodule RacingLeaderboards.Repo.Migrations.CreateCars do
     create table(:cars) do
       add :name, :string
       add :class, :string
+      add :sub_class, :string
       add :horsepower, :string
       add :weight, :string
       add :powertrain_type, :string
@@ -15,7 +16,5 @@ defmodule RacingLeaderboards.Repo.Migrations.CreateCars do
 
       timestamps(type: :utc_datetime)
     end
-
-    create index(:cars, [:game_id])
   end
 end

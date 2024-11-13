@@ -16,11 +16,21 @@ defmodule RacingLeaderboardsWeb.RecordLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:game_id, game.id)
-     |> assign(:game_code, game.code)
+     |> assign(:game, game)
      |> assign(:record, Records.get_record!(id))}
   end
 
   defp page_title(:show), do: "Show Record"
   defp page_title(:edit), do: "Edit Record"
+
+  @impl true
+  def handle_event("delete", %{"id" => id}, socket) do
+    record = Records.get_record!(id)
+    {:ok, _} = Records.delete_record(record)
+
+    {:noreply,
+     socket
+     |> put_flash(:info, "Record deleted successfully")
+     |> push_patch(to: ~p"/games/#{socket.assigns.game_code}/records")}
+  end
 end

@@ -1,0 +1,35 @@
+<.header>
+  Weekly Challenge / <%= @game.name %>
+</.header>
+
+<%= if not Enum.empty?(@grouped_records) do %>
+  <%= for {{date, circuit, car}, records} <- @grouped_records do %>
+    <.grouped_records
+      records={records}
+      record_click={
+        fn {record, _id} -> JS.navigate("/games/#{@game.code}/records/#{record.id}") end
+      }
+      add_new_record_link={
+        ~p"/games/#{@game.code}/records/new?date=#{date |> Date.to_string()}&circuit=#{circuit.id}&car=#{car.id}&redirect_to=#{@conn.request_path}"
+      }
+      date={date}
+      circuit_id={circuit.id}
+      circuit_country={circuit.country}
+      circuit_region={circuit.region}
+      circuit_name={circuit.name}
+      car_id={car.id}
+      car_name={car.name}
+      car_class={car.class}
+      game_code={@game.code}
+      request_path={@conn.request_path}
+    />
+  <% end %>
+<% else %>
+  <p>No records found for this date—Be the first to add one!</p>
+  <.link
+    href={~p"/games/#{@game.code}/records/new?redirect_to=#{@conn.request_path}"}
+    class="mt-6 inline-block p-2 bg-indigo-600 text-white rounded"
+  >
+    Add record
+  </.link>
+<% end %>

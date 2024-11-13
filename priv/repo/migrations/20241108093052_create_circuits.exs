@@ -13,7 +13,5 @@ defmodule RacingLeaderboards.Repo.Migrations.CreateCircuits do
 
       timestamps(type: :utc_datetime)
     end
-
-    create index(:circuits, [:game_id])
   end
 end
