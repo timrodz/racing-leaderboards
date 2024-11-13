@@ -24,7 +24,7 @@
   <:col :let={{_id, record}} label="Time">
     <%= record.time %>
     <%= if record.is_dnf do %>
-      <span>DNF</span>
+      <span class="bg-red-400 rounded text-white px-1 py-0.5">DNF</span>
     <% end %>
   </:col>
   <:action :let={{_id, record}}>
@@ -42,8 +42,6 @@
     </.link>
   </:action>
 </.table>
-
-<.back navigate={~p"/games"}>Back to games</.back>
 
 <.modal
   :if={@live_action in [:new, :edit]}
