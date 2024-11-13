@@ -1,5 +1,10 @@
 <.header>
   Weekly Challenge / <%= @game.name %>
+  <:actions>
+    <.link href={~p"/games/#{@game.code}"} class="cta-yellow">
+      Game page
+    </.link>
+  </:actions>
 </.header>
 
 <div class="my-6 space-y-2">

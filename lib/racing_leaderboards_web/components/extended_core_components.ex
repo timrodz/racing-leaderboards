@@ -21,6 +21,7 @@ defmodule RacingLeaderboardsWeb.ExtendedCoreComponents do
   attr(:car_id, :string, required: true)
   attr(:car_name, :string, required: true)
   attr(:car_class, :string, required: true)
+  attr(:car_sub_class, :string, default: nil)
 
   attr :record_click, :any, required: true, doc: "the function for handling phx-click on each row"
   attr :add_new_record_link, :string, required: true
@@ -40,7 +41,14 @@ defmodule RacingLeaderboardsWeb.ExtendedCoreComponents do
         / <%= @circuit_name %>
       </:item>
       <:item title="Car">
-        <%= @car_name %> (<%= @car_class %>)
+        <%= @car_name %>
+        <span class="bg-green-700 rounded px-2 py-1 text-white">
+          <%= if @car_sub_class do %>
+            <%= @car_class %> / <%= @car_sub_class %>
+          <% else %>
+            <%= @car_class %>
+          <% end %>
+        </span>
       </:item>
     </.list>
     <.table id="records" rows={@records |> Enum.with_index()} row_click={@record_click}>
@@ -52,10 +60,13 @@ defmodule RacingLeaderboardsWeb.ExtendedCoreComponents do
         </span>
       </:col>
       <:col :let={{record, _index}} label="Time">
-        <%= record.time %> <%= if record.is_dnf, do: "DNF" %>
+        <%= record.time %>
+        <%= if record.is_dnf do %>
+          <span class="bg-red-600 rounded text-white px-1 py-0.5">DNF</span>
+        <% end %>
       </:col>
     </.table>
-    <.link href={@add_new_record_link} class="cta">
+    <.link href={@add_new_record_link} class="cta mt-2">
       Add record
     </.link>
     """

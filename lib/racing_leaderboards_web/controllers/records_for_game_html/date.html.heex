@@ -1,12 +1,14 @@
 <.header>
   Daily Challenge / <%= @game.name %>
+  <:actions>
+    <.link href={~p"/games/#{@game.code}"} class="cta-yellow">
+      Game page
+    </.link>
+  </:actions>
 </.header>
 
 <div class="my-6 space-y-2">
   <img src={"/images/#{@game.image_url}"} alt={@game.code} class="w-full rounded" />
-  <.link href={~p"/games/#{@game.code}"} class="cta-green">
-    Game page
-  </.link>
 </div>
 
 <%= if not Enum.empty?(@grouped_records) do %>
@@ -27,6 +29,7 @@
       car_id={car.id}
       car_name={car.name}
       car_class={car.class}
+      car_sub_class={car.sub_class}
       game_code={@game.code}
       request_path={@conn.request_path}
     />

@@ -4,24 +4,24 @@ defmodule RacingLeaderboardsWeb.RecordsForGameController do
   use RacingLeaderboardsWeb, :controller
 
   def by_date(conn, %{"date" => date, "game_code" => game_code}) do
-    render(conn, "date.html", get_records_for_date(date, game_code))
+    render(conn, "date.html", get_records_for_date(date, game_code, "Records for #{date}"))
   end
 
   def daily(conn, %{"game_code" => game_code}) do
     today = NaiveDateTime.local_now() |> NaiveDateTime.to_date() |> Date.to_string()
-    render(conn, "date.html", get_records_for_date(today, game_code))
+    render(conn, "date.html", get_records_for_date(today, game_code, "Daily Challenge"))
+  end
+
+  def by_week(conn, %{"date" => date, "game_code" => game_code}) do
+    render(conn, "week.html", get_records_for_week(date, game_code, "Week #{date}"))
   end
 
   def weekly(conn, %{"game_code" => game_code}) do
     today = NaiveDateTime.local_now() |> NaiveDateTime.to_date() |> Date.to_string()
-    render(conn, "week.html", get_records_for_week(today, game_code))
+    render(conn, "week.html", get_records_for_week(today, game_code, "Weekly challenge"))
   end
 
-  def by_week(conn, %{"date" => date, "game_code" => game_code}) do
-    render(conn, "week.html", get_records_for_week(date, game_code))
-  end
-
-  defp get_records_for_date(date, game_code) do
+  defp get_records_for_date(date, game_code, page_title) do
     game =
       Games.get_game_by_code!(game_code)
 
@@ -32,13 +32,14 @@ defmodule RacingLeaderboardsWeb.RecordsForGameController do
       |> Enum.group_by(&{&1.circuit, &1.car})
 
     %{
+      page_title: page_title,
       game: game,
       date: date,
       grouped_records: grouped_records
     }
   end
 
-  defp get_records_for_week(date, game_code) do
+  defp get_records_for_week(date, game_code, page_title) do
     game =
       Games.get_game_by_code!(game_code)
 
@@ -54,17 +55,13 @@ defmodule RacingLeaderboardsWeb.RecordsForGameController do
 
     grouped_records_by_date =
       records
-      # |> Enum.group_by(&{&1.circuit, &1.car})
-      # |> Enum.group_by(fn {{circuit, car}, records} ->
-      #   records |> Enum.group_by(fn r -> r.date end)
-      # end)
       |> Enum.group_by(&{&1.circuit, &1.car})
       |> IO.inspect(label: "HI")
 
     %{
+      page_title: page_title,
       game: game,
-      grouped_records: grouped_records,
-      grouped_records_by_date: grouped_records_by_date
+      grouped_records: grouped_records
     }
   end
 end
