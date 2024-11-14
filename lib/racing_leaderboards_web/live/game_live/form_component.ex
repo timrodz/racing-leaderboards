@@ -9,7 +9,6 @@ defmodule RacingLeaderboardsWeb.GameLive.FormComponent do
     <div>
       <.header>
         <%= @title %>
-        <:subtitle>Use this form to manage game records in your database.</:subtitle>
       </.header>
 
       <.simple_form

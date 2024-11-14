@@ -1,5 +1,5 @@
 <.header>
-  Daily Challenge / <%= @game.name %>
+  <%= @game.name %> / Daily Challenge
   <:actions>
     <.link href={~p"/games/#{@game.code}"} class="cta-yellow">
       Game page
@@ -29,8 +29,8 @@
       car_id={car.id}
       car_name={car.name}
       car_class={car.class}
-      car_sub_class={car.sub_class}
       game_code={@game.code}
+      car_sub_class={car.sub_class}
       request_path={@conn.request_path}
     />
   <% end %>

@@ -9,7 +9,6 @@ defmodule RacingLeaderboardsWeb.CarLive.FormComponent do
     <div>
       <.header>
         <%= @title %> / <%= @game_name %>
-        <:subtitle>Use this form to manage car records in your database.</:subtitle>
       </.header>
 
       <.simple_form
@@ -56,7 +55,7 @@ defmodule RacingLeaderboardsWeb.CarLive.FormComponent do
     save_car(
       socket,
       socket.assigns.action,
-      car_params |> Map.put(:game_id, socket.assigns.game_id)
+      car_params |> Map.put("game_id", socket.assigns.game_id)
     )
   end
 

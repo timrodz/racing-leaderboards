@@ -1,16 +1,14 @@
 <.header>
-  Records - <%= @game.name %>
+  <%= @game.name %> / Records
   <:actions>
-    <.link patch={~p"/games/#{@game.code}/records/new"} class="cta">
-      New Record
-    </.link>
     <.link href={~p"/games/#{@game.code}"} class="cta-yellow">
       Game page
     </.link>
+    <.link patch={~p"/games/#{@game.code}/records/new"} class="cta">
+      New Record
+    </.link>
   </:actions>
 </.header>
-
-<img src={"/images/#{@game.image_url}"} alt={@game.code} class="w-full rounded my-6" />
 
 <.table
   id="records"

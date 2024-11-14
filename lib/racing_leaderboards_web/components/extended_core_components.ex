@@ -3,54 +3,57 @@ defmodule RacingLeaderboardsWeb.ExtendedCoreComponents do
 
   import RacingLeaderboardsWeb.CoreComponents
 
-  alias RacingLeaderboards.DateUtils
+  # alias RacingLeaderboards.DateUtils
 
   use Gettext, backend: RacingLeaderboardsWeb.Gettext
 
-  attr(:records, :list, required: true)
-  attr(:request_path, :string, required: true)
   attr(:date, :string, required: true)
 
-  attr(:circuit_id, :string, required: true)
   attr(:circuit_country, :string, required: true)
   attr(:circuit_region, :string, required: true)
   attr(:circuit_name, :string, required: true)
 
-  attr(:game_code, :string, required: true)
-
-  attr(:car_id, :string, required: true)
   attr(:car_name, :string, required: true)
   attr(:car_class, :string, required: true)
   attr(:car_sub_class, :string, default: nil)
 
-  attr :record_click, :any, required: true, doc: "the function for handling phx-click on each row"
-  attr :add_new_record_link, :string, required: true
-
-  def grouped_records(assigns) do
+  def record_by_date_overview(assigns) do
     ~H"""
-    <.list>
-      <:item title="Date">
-        <%= @date %>
-      </:item>
-      <:item title="Circuit">
+    <h3 class="font-semibold"><%= RacingLeaderboardsWeb.DateUtils.parse(@date) %></h3>
+    <div>
+      <h3 class="font-semibold">Circuit</h3>
+      <p>
         <%= if @circuit_country do %>
-          <%= RacingLeaderboardsWeb.Utils.Circuits.country_to_emoji(@circuit_country) %> <%= @circuit_country %>
+          <%= @circuit_country %>
+          <%= RacingLeaderboardsWeb.Utils.Circuits.country_to_emoji(@circuit_country) %>
         <% else %>
           <%= @circuit_region %>
         <% end %>
-        / <%= @circuit_name %>
-      </:item>
-      <:item title="Car">
+      </p>
+      <p><%= @circuit_name %></p>
+    </div>
+    <div>
+      <h3 class="font-semibold">Car</h3>
+      <p>
         <%= @car_name %>
-        <span class="bg-green-700 rounded px-2 py-1 text-white">
+        <span class="bg-slate-700 rounded px-2 py-1 text-white">
           <%= if @car_sub_class do %>
             <%= @car_class %> / <%= @car_sub_class %>
           <% else %>
             <%= @car_class %>
           <% end %>
         </span>
-      </:item>
-    </.list>
+      </p>
+    </div>
+    """
+  end
+
+  attr(:records, :list, required: true)
+  attr :record_click, :any, default: nil, doc: "the function for handling phx-click on each row"
+  attr :add_new_record_link, :string, required: true
+
+  def grouped_records(assigns) do
+    ~H"""
     <.table id="records" rows={@records |> Enum.with_index()} row_click={@record_click}>
       <:col :let={{_record, index}} label="#"><%= index + 1 %></:col>
       <:col :let={{record, index}} label="User">
@@ -140,30 +143,30 @@ defmodule RacingLeaderboardsWeb.ExtendedCoreComponents do
     """
   end
 
-  attr(:dt, :string, required: true)
-  attr(:label, :string, default: nil)
-  attr(:class, :string, default: nil)
+  # attr(:dt, :string, required: true)
+  # attr(:label, :string, default: nil)
+  # attr(:class, :string, default: nil)
 
-  def datetime(assigns) do
-    ~H"""
-    <p class="mt-2 flex items-center gap-1 text-sm">
-      <CoreComponents.icon name="hero-clock" class="h-5 w-5" />
-      <%= @label %>
-      <span><%= @dt |> DateUtils.render_naive_datetime_full() %></span>
-    </p>
-    """
-  end
+  # def datetime(assigns) do
+  #   ~H"""
+  #   <p class="mt-2 flex items-center gap-1 text-sm">
+  #     <CoreComponents.icon name="hero-clock" class="h-5 w-5" />
+  #     <%= @label %>
+  #     <span><%= @dt |> DateUtils.render_naive_datetime_full() %></span>
+  #   </p>
+  #   """
+  # end
 
-  attr(:dt, :string, required: true)
-  attr(:label, :string, default: nil)
-  attr(:class, :string, default: nil)
+  # attr(:dt, :string, required: true)
+  # attr(:label, :string, default: nil)
+  # attr(:class, :string, default: nil)
 
-  def date(assigns) do
-    ~H"""
-    <p class="mt-2 flex items-center gap-1 text-sm">
-      <%= @label %>
-      <span><%= @dt |> DateUtils.render_naive_datetime_date() %></span>
-    </p>
-    """
-  end
+  # def date(assigns) do
+  #   ~H"""
+  #   <p class="mt-2 flex items-center gap-1 text-sm">
+  #     <%= @label %>
+  #     <span><%= @dt |> DateUtils.render_naive_datetime_date() %></span>
+  #   </p>
+  #   """
+  # end
 end

@@ -1,11 +1,11 @@
 <.header>
-  Cars - <%= @game.name %>
+  <%= @game.name %> / Cars
   <:actions>
-    <.link patch={~p"/games/#{@game.code}/cars/new"} class="cta">
-      New Car
-    </.link>
     <.link href={~p"/games/#{@game.code}"} class="cta-yellow">
       Game page
+    </.link>
+    <.link patch={~p"/games/#{@game.code}/cars/new"} class="cta">
+      New Car
     </.link>
   </:actions>
 </.header>

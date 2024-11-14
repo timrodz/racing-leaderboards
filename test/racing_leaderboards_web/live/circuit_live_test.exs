@@ -23,7 +23,7 @@ defmodule RacingLeaderboardsWeb.CircuitLiveTest do
     test "lists all circuits", %{conn: conn, map: map} do
       {:ok, _index_live, html} = live(conn, ~p"/circuits")
 
-      assert html =~ "Listing Circuits"
+      assert html =~ "Circuits"
       assert html =~ map.country
     end
 

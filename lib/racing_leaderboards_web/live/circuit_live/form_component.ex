@@ -10,7 +10,6 @@ defmodule RacingLeaderboardsWeb.CircuitLive.FormComponent do
     <div>
       <.header>
         <%= @title %>
-        <:subtitle>Use this form to manage circuit records in your database.</:subtitle>
       </.header>
 
       <.simple_form
@@ -60,7 +59,11 @@ defmodule RacingLeaderboardsWeb.CircuitLive.FormComponent do
   end
 
   def handle_event("save", %{"circuit" => circuit_params}, socket) do
-    save_map(socket, socket.assigns.action, circuit_params)
+    save_map(
+      socket,
+      socket.assigns.action,
+      circuit_params |> Map.put("game_id", socket.assigns.game_id)
+    )
   end
 
   defp save_map(socket, :edit, circuit_params) do

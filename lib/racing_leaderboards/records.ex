@@ -46,7 +46,7 @@ defmodule RacingLeaderboards.Records do
     Repo.all(
       from(r in Record,
         where: r.date == ^date,
-        order_by: [asc: :time]
+        order_by: [asc: :is_dnf, desc: :time]
       )
     )
     |> Repo.preload([:user, :circuit, :car])
@@ -64,7 +64,7 @@ defmodule RacingLeaderboards.Records do
         where:
           r.date >= ^Date.beginning_of_week(date) and
             r.date <= ^Date.end_of_week(date),
-        order_by: [asc: :date, asc: :time]
+        order_by: [asc: :date, asc: :is_dnf, desc: :time]
       )
     )
     |> Repo.preload([:user, :circuit, :car])
@@ -74,7 +74,7 @@ defmodule RacingLeaderboards.Records do
     Repo.all(
       from(r in Record,
         where: r.game_id == ^game_id and r.date == ^date,
-        order_by: [asc: :time]
+        order_by: [asc: :is_dnf, desc: :time]
       )
     )
     |> Repo.preload([:user, :circuit, :car])
@@ -93,7 +93,7 @@ defmodule RacingLeaderboards.Records do
           r.game_id == ^game_id and
             r.date >= ^Date.beginning_of_week(date) and
             r.date <= ^Date.end_of_week(date),
-        order_by: [asc: :date, asc: :time]
+        order_by: [asc: :date, asc: :is_dnf, desc: :time]
       )
     )
     |> Repo.preload([:user, :circuit, :car])

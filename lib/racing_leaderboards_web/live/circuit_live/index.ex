@@ -22,19 +22,19 @@ defmodule RacingLeaderboardsWeb.CircuitLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Circuit")
+    |> assign(:page_title, "Edit Circuit - #{socket.assigns.game.name}")
     |> assign(:circuit, Circuits.get_circuit!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Circuit")
+    |> assign(:page_title, "New Circuit - #{socket.assigns.game.name}")
     |> assign(:circuit, %Circuit{})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Circuits")
+    |> assign(:page_title, "Circuits - #{socket.assigns.game.name}")
     |> assign(:circuit, nil)
   end
 

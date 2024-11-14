@@ -1,4 +1,5 @@
 defmodule RacingLeaderboardsWeb.CarLive.Show do
+  alias RacingLeaderboards.Games
   use RacingLeaderboardsWeb, :live_view
 
   alias RacingLeaderboards.Cars
@@ -9,10 +10,13 @@ defmodule RacingLeaderboardsWeb.CarLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id}, _, socket) do
+  def handle_params(%{"id" => id, "game_code" => game_code}, _, socket) do
+    game = Games.get_game_by_code!(game_code)
+
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
+     |> assign(:game, game)
      |> assign(:car, Cars.get_car!(id))}
   end
 

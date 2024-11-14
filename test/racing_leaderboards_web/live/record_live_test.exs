@@ -24,7 +24,7 @@ defmodule RacingLeaderboardsWeb.RecordLiveTest do
     test "lists all records", %{conn: conn, record: record} do
       {:ok, _index_live, html} = live(conn, ~p"/games/0/records")
 
-      assert html =~ "Listing Records"
+      assert html =~ "Records"
       assert html =~ record.time
     end
 

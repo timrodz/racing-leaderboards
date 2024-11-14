@@ -19,7 +19,7 @@ defmodule RacingLeaderboardsWeb.UserLiveTest do
     test "lists all users", %{conn: conn, user: user} do
       {:ok, _index_live, html} = live(conn, ~p"/users")
 
-      assert html =~ "Listing Users"
+      assert html =~ "Users"
       assert html =~ user.name
     end
 

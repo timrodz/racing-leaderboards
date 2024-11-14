@@ -1,14 +1,22 @@
 <.header>
   <%= @game.name %>
   <:actions>
-    <.link patch={~p"/games/#{@game}/show/edit"} phx-click={JS.push_focus()} class="cta">
-      Edit game
+    <.link patch={~p"/games/#{@game.code}/show/edit"} phx-click={JS.push_focus()} class="cta">
+      Edit
+    </.link>
+    <.link
+      phx-click={JS.push("delete", value: %{id: @game.id})}
+      class="cta-red"
+      data-confirm="Are you sure?"
+    >
+      Delete
     </.link>
   </:actions>
 </.header>
 
+<img src={"/images/#{@game.image_url}"} alt={@game.code} class="w-full rounded my-6" />
+
 <div class="my-6 flex flex-col gap-2">
-  <img src={"/images/#{@game.image_url}"} alt={@game.name} class="rounded" />
   <.link href={~p"/games/#{@game.code}/challenge/daily"} class="cta-green">
     Daily challenge
   </.link>
@@ -28,13 +36,18 @@
 
 <.back navigate={~p"/games"}>Back to games</.back>
 
-<.modal :if={@live_action == :edit} id="game-modal" show on_cancel={JS.patch(~p"/games/#{@game}")}>
+<.modal
+  :if={@live_action == :edit}
+  id="game-modal"
+  show
+  on_cancel={JS.patch(~p"/games/#{@game.code}")}
+>
   <.live_component
     module={RacingLeaderboardsWeb.GameLive.FormComponent}
     id={@game.id}
     title={@page_title}
     action={@live_action}
     game={@game}
-    patch={~p"/games/#{@game}"}
+    patch={~p"/games/#{@game.code}"}
   />
 </.modal>

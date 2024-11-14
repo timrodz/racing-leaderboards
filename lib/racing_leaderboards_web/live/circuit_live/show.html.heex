@@ -2,8 +2,12 @@
   Circuit <%= @circuit.id %>
   <:subtitle>This is a circuit record from your database.</:subtitle>
   <:actions>
-    <.link patch={~p"/circuits/#{@circuit}/show/edit"} phx-click={JS.push_focus()} class="cta">
-      Edit circuit
+    <.link
+      patch={~p"/games/#{@game.code}/circuits/#{@circuit}/show/edit"}
+      phx-click={JS.push_focus()}
+      class="cta"
+    >
+      Edit
     </.link>
   </:actions>
 </.header>
@@ -19,13 +23,13 @@
   <:item title="Distance (Km)"><%= @circuit.distance %></:item>
 </.list>
 
-<.back navigate={~p"/circuits"}>Back to circuits</.back>
+<.back navigate={~p"/games/#{@game.code}/circuits"}>Back to circuits</.back>
 
 <.modal
   :if={@live_action == :edit}
   id="circuit-modal"
   show
-  on_cancel={JS.patch(~p"/circuits/#{@circuit}")}
+  on_cancel={JS.patch(~p"/games/#{@game.code}/circuits/#{@circuit}")}
 >
   <.live_component
     module={RacingLeaderboardsWeb.CircuitLive.FormComponent}
@@ -33,6 +37,8 @@
     title={@page_title}
     action={@live_action}
     circuit={@circuit}
-    patch={~p"/circuits/#{@circuit}"}
+    game_id={@game.id}
+    game_name={@game.name}
+    patch={~p"/games/#{@game.code}/circuits/#{@circuit}"}
   />
 </.modal>

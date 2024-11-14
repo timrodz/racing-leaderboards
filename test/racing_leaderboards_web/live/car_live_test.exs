@@ -4,9 +4,36 @@ defmodule RacingLeaderboardsWeb.CarLiveTest do
   import Phoenix.LiveViewTest
   import RacingLeaderboards.CarsFixtures
 
-  @create_attrs %{name: "some name", class: "some class", horsepower: "some horsepower", weight: "some weight", powertrain_type: "some powertrain_type", transmision_type: "some transmision_type", engine_type: "some engine_type", aspiration_type: "some aspiration_type"}
-  @update_attrs %{name: "some updated name", class: "some updated class", horsepower: "some updated horsepower", weight: "some updated weight", powertrain_type: "some updated powertrain_type", transmision_type: "some updated transmision_type", engine_type: "some updated engine_type", aspiration_type: "some updated aspiration_type"}
-  @invalid_attrs %{name: nil, class: nil, horsepower: nil, weight: nil, powertrain_type: nil, transmision_type: nil, engine_type: nil, aspiration_type: nil}
+  @create_attrs %{
+    name: "some name",
+    class: "some class",
+    horsepower: "some horsepower",
+    weight: "some weight",
+    powertrain_type: "some powertrain_type",
+    transmision_type: "some transmision_type",
+    engine_type: "some engine_type",
+    aspiration_type: "some aspiration_type"
+  }
+  @update_attrs %{
+    name: "some updated name",
+    class: "some updated class",
+    horsepower: "some updated horsepower",
+    weight: "some updated weight",
+    powertrain_type: "some updated powertrain_type",
+    transmision_type: "some updated transmision_type",
+    engine_type: "some updated engine_type",
+    aspiration_type: "some updated aspiration_type"
+  }
+  @invalid_attrs %{
+    name: nil,
+    class: nil,
+    horsepower: nil,
+    weight: nil,
+    powertrain_type: nil,
+    transmision_type: nil,
+    engine_type: nil,
+    aspiration_type: nil
+  }
 
   defp create_car(_) do
     car = car_fixture()
@@ -19,7 +46,7 @@ defmodule RacingLeaderboardsWeb.CarLiveTest do
     test "lists all cars", %{conn: conn, car: car} do
       {:ok, _index_live, html} = live(conn, ~p"/cars")
 
-      assert html =~ "Listing Cars"
+      assert html =~ "Cars"
       assert html =~ car.name
     end
 

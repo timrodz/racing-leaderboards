@@ -2,8 +2,19 @@
   Car <%= @car.id %>
   <:subtitle>This is a car record from your database.</:subtitle>
   <:actions>
-    <.link patch={~p"/cars/#{@car}/show/edit"} phx-click={JS.push_focus()} class="cta">
-      Edit car
+    <.link
+      patch={~p"/games/#{@game.code}/cars/#{@car}/show/edit"}
+      phx-click={JS.push_focus()}
+      class="cta"
+    >
+      Edit
+    </.link>
+    <.link
+      phx-click={JS.push("delete", value: %{id: @car.id})}
+      class="cta-red"
+      data-confirm="Are you sure?"
+    >
+      Delete
     </.link>
   </:actions>
 </.header>
@@ -19,15 +30,22 @@
   <:item title="Aspiration type"><%= @car.aspiration_type %></:item>
 </.list>
 
-<.back navigate={~p"/cars"}>Back to cars</.back>
+<.back navigate={~p"/games/#{@game.code}/cars"}>Back to cars</.back>
 
-<.modal :if={@live_action == :edit} id="car-modal" show on_cancel={JS.patch(~p"/cars/#{@car}")}>
+<.modal
+  :if={@live_action == :edit}
+  id="car-modal"
+  show
+  on_cancel={JS.patch(~p"/games/#{@game.code}/cars/#{@car}")}
+>
   <.live_component
     module={RacingLeaderboardsWeb.CarLive.FormComponent}
     id={@car.id}
     title={@page_title}
     action={@live_action}
     car={@car}
-    patch={~p"/cars/#{@car}"}
+    game_id={@game.id}
+    game_name={@game.name}
+    patch={~p"/games/#{@game.code}/cars/#{@car}"}
   />
 </.modal>

@@ -12,7 +12,7 @@ defmodule RacingLeaderboardsWeb.CarLive.Index do
     {:ok,
      socket
      |> assign(game: game)
-     |> stream(:cars, Cars.list_cars())}
+     |> stream(:cars, Cars.list_cars_by_game(game.id))}
   end
 
   @impl true
@@ -22,19 +22,19 @@ defmodule RacingLeaderboardsWeb.CarLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Car")
+    |> assign(:page_title, "Edit Car - #{socket.assigns.game.name}")
     |> assign(:car, Cars.get_car!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Car")
+    |> assign(:page_title, "New Car - #{socket.assigns.game.name}")
     |> assign(:car, %Car{})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Cars")
+    |> assign(:page_title, "Cars - #{socket.assigns.game.name}")
     |> assign(:car, nil)
   end
 

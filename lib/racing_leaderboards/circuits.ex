@@ -18,11 +18,16 @@ defmodule RacingLeaderboards.Circuits do
 
   """
   def list_circuits do
-    Repo.all(Circuit)
+    Repo.all(from(Circuit, order_by: [asc: :country, asc: :region, asc: :name]))
   end
 
   def list_circuits_by_game(id) do
-    Repo.all(from(c in Circuit, where: c.game_id == ^id))
+    Repo.all(
+      from(c in Circuit,
+        where: c.game_id == ^id,
+        order_by: [asc: :country, asc: :region, asc: :name]
+      )
+    )
   end
 
   @doc """

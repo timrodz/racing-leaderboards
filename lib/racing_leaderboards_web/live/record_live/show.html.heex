@@ -7,9 +7,13 @@
       phx-click={JS.push_focus()}
       class="cta"
     >
-      Edit record
+      Edit
     </.link>
-    <.link phx-click={JS.push("delete", value: %{id: @record.id})} data-confirm="Are you sure?">
+    <.link
+      phx-click={JS.push("delete", value: %{id: @record.id})}
+      class="cta-red"
+      data-confirm="Are you sure?"
+    >
       Delete
     </.link>
   </:actions>

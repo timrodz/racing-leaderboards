@@ -33,19 +33,19 @@ defmodule RacingLeaderboardsWeb.RecordLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Record")
+    |> assign(:page_title, "Edit Record - #{socket.assigns.game.name}")
     |> assign(:record, Records.get_record!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Record")
+    |> assign(:page_title, "New Record - #{socket.assigns.game.name}")
     |> assign(:record, %Record{})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Records")
+    |> assign(:page_title, "Records - #{socket.assigns.game.name}")
     |> assign(:record, nil)
   end
 

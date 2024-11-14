@@ -1,5 +1,5 @@
 <.header>
-  Weekly Challenge / <%= @game.name %>
+  <%= @game.name %> / Weekly Challenge
   <:actions>
     <.link href={~p"/games/#{@game.code}"} class="cta-yellow">
       Game page
@@ -9,12 +9,45 @@
 
 <div class="my-6 space-y-2">
   <img src={"/images/#{@game.image_url}"} alt={@game.code} class="w-full rounded" />
-  <.link href={~p"/games/#{@game.code}"} class="cta-green">
-    Game page
-  </.link>
 </div>
 
-<%= if not Enum.empty?(@grouped_records) do %>
+<div class="space-y-2">
+  <%= for {date, grouped_records} <- @iterated_dates do %>
+    <div class="card">
+      <%= if not is_nil(grouped_records) do %>
+        <%= for {{circuit, car}, records} <- grouped_records do %>
+          <.record_by_date_overview
+            date={date}
+            circuit_country={circuit.country}
+            circuit_region={circuit.region}
+            circuit_name={circuit.name}
+            car_name={car.name}
+            car_class={car.class}
+            car_sub_class={car.sub_class}
+          />
+          <.grouped_records
+            records={records}
+            add_new_record_link={
+              ~p"/games/#{@game.code}/records/new?date=#{date |> Date.to_string()}&circuit=#{circuit.id}&car=#{car.id}&redirect_to=#{@conn.request_path}"
+            }
+          />
+        <% end %>
+      <% else %>
+        <p><%= RacingLeaderboardsWeb.DateUtils.parse(date) %></p>
+        <.link
+          href={
+            ~p"/games/#{@game.code}/records/new?date=#{date |> Date.to_string()}&redirect_to=#{@conn.request_path}"
+          }
+          class="cta"
+        >
+          Add record
+        </.link>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<%!-- <%= if not Enum.empty?(@grouped_records) do %>
   <%= for {{date, circuit, car}, records} <- @grouped_records do %>
     <.grouped_records
       records={records}
@@ -24,16 +57,6 @@
       add_new_record_link={
         ~p"/games/#{@game.code}/records/new?date=#{date |> Date.to_string()}&circuit=#{circuit.id}&car=#{car.id}&redirect_to=#{@conn.request_path}"
       }
-      date={date}
-      circuit_id={circuit.id}
-      circuit_country={circuit.country}
-      circuit_region={circuit.region}
-      circuit_name={circuit.name}
-      car_id={car.id}
-      car_name={car.name}
-      car_class={car.class}
-      game_code={@game.code}
-      request_path={@conn.request_path}
     />
   <% end %>
 <% else %>
@@ -41,4 +64,4 @@
   <.link href={~p"/games/#{@game.code}/records/new?redirect_to=#{@conn.request_path}"} class="cta">
     Add record
   </.link>
-<% end %>
+<% end %> --%>

@@ -18,11 +18,16 @@ defmodule RacingLeaderboards.Cars do
 
   """
   def list_cars do
-    Repo.all(Car) |> Repo.preload(:game)
+    Repo.all(from(Car, order_by: [asc: :class, asc: :sub_class, asc: :name]))
   end
 
   def list_cars_by_game(id) do
-    Repo.all(from(c in Car, where: c.game_id == ^id))
+    Repo.all(
+      from(c in Car,
+        where: c.game_id == ^id,
+        order_by: [asc: :class, asc: :sub_class, asc: :name]
+      )
+    )
   end
 
   @doc """
