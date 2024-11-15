@@ -131,7 +131,7 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
 
     {:ok,
      socket
-     |> assign(assigns |> IO.inspect(label: "FORM ASSIGNS"))
+     |> assign(assigns)
      |> assign(
        users: users,
        circuits: circuits,

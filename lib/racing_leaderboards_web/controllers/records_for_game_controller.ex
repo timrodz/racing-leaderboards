@@ -81,7 +81,6 @@ defmodule RacingLeaderboardsWeb.RecordsForGameController do
     records_by_date =
       records
       |> Enum.group_by(& &1.date)
-      |> IO.inspect(label: "BY DATE")
 
     iterated_dates =
       Date.range(start_of_week, end_of_week)
