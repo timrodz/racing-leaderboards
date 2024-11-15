@@ -36,7 +36,7 @@
       <p>No records found for this date—Be the first to add one!</p>
       <.link
         href={
-          ~p"/games/#{@game.code}/records/new?date=#{@date}&redirect_to=#{@conn.request_path}"
+          ~p"/games/#{@game.code}/records/new?date=#{@date |> Date.to_string()}&redirect_to=#{@conn.request_path}"
         }
         class="cta"
       >
