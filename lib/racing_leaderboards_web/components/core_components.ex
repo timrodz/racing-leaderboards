@@ -231,8 +231,8 @@ defmodule RacingLeaderboardsWeb.CoreComponents do
     <button
       type={@type}
       class={[
-        "phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3",
-        "text-sm font-semibold leading-6 text-white active:text-white/80",
+        "phx-submit-loading:opacity-75",
+        "hover:bg-indigo-50 hover:text-indigo-800 text-indigo-700 bg-indigo-100 rounded-md px-4 py-2 text-sm font-semibold hover:underline",
         @class
       ]}
       {@rest}
@@ -474,7 +474,7 @@ defmodule RacingLeaderboardsWeb.CoreComponents do
 
     ~H"""
     <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
-      <table class="w-[40rem] mt-11 sm:w-full">
+      <table class="w-[40rem] mt-6 sm:w-full">
         <thead class="text-sm text-left leading-6 text-zinc-500">
           <tr>
             <th :for={col <- @col} class="p-0 pb-4 pl-2 pr-6 font-normal"><%= col[:label] %></th>
@@ -495,15 +495,16 @@ defmodule RacingLeaderboardsWeb.CoreComponents do
               class={["relative p-0", @row_click && "hover:cursor-pointer"]}
             >
               <div class="block py-4 pl-2 pr-6">
-                <%!-- <span class="absolute -inset-y-px right-0 -left-4 bg-zinc-50 sm:rounded-l-xl" /> --%>
+                <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-zinc-50 sm:rounded-l-xl" />
+                <span class="absolute h-full -inset-y-px -right-4 left-0 group-hover:bg-zinc-50 sm:rounded-r-xl" />
                 <span class={["relative", i == 0 && "font-semibold text-zinc-900"]}>
                   <%= render_slot(col, @row_item.(row)) %>
                 </span>
               </div>
             </td>
             <td :if={@action != []} class="relative w-14 p-0">
+              <span class="absolute h-full -inset-y-px -right-4 left-0 group-hover:bg-zinc-50 sm:rounded-r-xl" />
               <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
-                <span class="absolute -inset-y-px -right-4 left-0 bg-red-50 sm:rounded-r-xl" />
                 <span
                   :for={action <- @action}
                   class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700"

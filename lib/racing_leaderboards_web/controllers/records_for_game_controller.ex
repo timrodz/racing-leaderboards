@@ -1,10 +1,21 @@
 defmodule RacingLeaderboardsWeb.RecordsForGameController do
+  alias RacingLeaderboardsWeb.DateUtils
   alias RacingLeaderboards.Records
   alias RacingLeaderboards.Games
   use RacingLeaderboardsWeb, :controller
 
   def by_date(conn, %{"date" => date, "game_code" => game_code}) do
-    render(conn, "date.html", get_records_for_date(date, game_code, "Records for #{date}"))
+    dt = DateUtils.parse(Date.from_iso8601!(date))
+
+    render(
+      conn,
+      "date.html",
+      get_records_for_date(
+        date,
+        game_code,
+        "Records for #{dt}"
+      )
+    )
   end
 
   def daily(conn, %{"game_code" => game_code}) do
@@ -21,21 +32,28 @@ defmodule RacingLeaderboardsWeb.RecordsForGameController do
     render(conn, "week.html", get_records_for_week(today, game_code, "Weekly challenge"))
   end
 
-  defp get_records_for_date(date, game_code, page_title) do
+  defp get_records_for_date(date_string, game_code, page_title) do
     game =
       Games.get_game_by_code!(game_code)
 
     records =
-      Records.list_records_by_game_date(game.id, date)
+      Records.list_records_by_game_date(game.id, date_string)
 
     grouped_records =
       records
       |> Enum.group_by(&{&1.circuit, &1.car})
 
+    date =
+      case Date.from_iso8601(date_string) do
+        {:ok, parsed_date} -> parsed_date
+        _ -> NaiveDateTime.local_now() |> NaiveDateTime.to_date()
+      end
+
     %{
       page_title: page_title,
       game: game,
       date: date,
+      date_parsed: DateUtils.parse(date),
       grouped_records: grouped_records
     }
   end
@@ -79,7 +97,6 @@ defmodule RacingLeaderboardsWeb.RecordsForGameController do
             {day, r |> Enum.group_by(&{&1.circuit, &1.car})}
         end
       end)
-      |> IO.inspect(label: "iterated dates")
 
     %{
       page_title: page_title,

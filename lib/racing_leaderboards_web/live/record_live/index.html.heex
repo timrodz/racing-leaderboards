@@ -10,6 +10,16 @@
   </:actions>
 </.header>
 
+<div class="my-4">
+  <h3>Search records for date</h3>
+  <.simple_form for={@form} id="date-form" phx-submit="search">
+    <.input field={@form[:date]} type="date" required />
+    <:actions>
+      <.button>Search</.button>
+    </:actions>
+  </.simple_form>
+</div>
+
 <.table
   id="records"
   rows={@streams.records}

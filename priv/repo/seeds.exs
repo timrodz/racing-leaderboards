@@ -23,16 +23,7 @@ now = DateTime.utc_now() |> DateTime.truncate(:second) |> IO.inspect(label: "tim
 
 user_names =
   [
-    "Juan M",
-    "Jason W",
-    "Tim J",
-    "Michael X",
-    "Matt S",
-    "Jonathon H",
-    "Oscar J",
-    "Alice L",
-    "Meng H",
-    "Matthew D"
+    "Juan M"
   ]
   |> Enum.map(fn name ->
     %{

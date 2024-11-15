@@ -1,17 +1,5 @@
 <.header>
   <%= @game.name %>
-  <:actions>
-    <.link patch={~p"/games/#{@game.code}/show/edit"} phx-click={JS.push_focus()} class="cta">
-      Edit
-    </.link>
-    <.link
-      phx-click={JS.push("delete", value: %{id: @game.id})}
-      class="cta-red"
-      data-confirm="Are you sure?"
-    >
-      Delete
-    </.link>
-  </:actions>
 </.header>
 
 <img src={"/images/#{@game.image_url}"} alt={@game.code} class="w-full rounded my-6" />
@@ -34,6 +22,16 @@
   </.link>
 </div>
 
+<div>
+  <h3>Search records for date</h3>
+  <.simple_form for={@form} id="date-form" phx-submit="search">
+    <.input field={@form[:date]} type="date" required />
+    <:actions>
+      <.button>Search</.button>
+    </:actions>
+  </.simple_form>
+</div>
+
 <.back navigate={~p"/games"}>Back to games</.back>
 
 <.modal
@@ -51,3 +49,17 @@
     patch={~p"/games/#{@game.code}"}
   />
 </.modal>
+
+<div class="mt-10">
+  <p>ADMIN STUFF — PROCEED CAREFULLY</p>
+  <.link patch={~p"/games/#{@game.code}/show/edit"} phx-click={JS.push_focus()} class="cta">
+    Edit
+  </.link>
+  <.link
+    phx-click={JS.push("delete", value: %{id: @game.id})}
+    class="cta-red"
+    data-confirm="Are you sure?"
+  >
+    Delete
+  </.link>
+</div>

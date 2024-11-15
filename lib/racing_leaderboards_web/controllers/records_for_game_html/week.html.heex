@@ -14,26 +14,29 @@
 <div class="space-y-2">
   <%= for {date, grouped_records} <- @iterated_dates do %>
     <div class="card">
+      <h3 class="font-bold tracking-wide uppercase">
+        <%= RacingLeaderboardsWeb.DateUtils.parse(date) %>
+      </h3>
       <%= if not is_nil(grouped_records) do %>
         <%= for {{circuit, car}, records} <- grouped_records do %>
-          <.record_by_date_overview
-            date={date}
-            circuit_country={circuit.country}
-            circuit_region={circuit.region}
-            circuit_name={circuit.name}
-            car_name={car.name}
-            car_class={car.class}
-            car_sub_class={car.sub_class}
-          />
-          <.grouped_records
-            records={records}
-            add_new_record_link={
-              ~p"/games/#{@game.code}/records/new?date=#{date |> Date.to_string()}&circuit=#{circuit.id}&car=#{car.id}&redirect_to=#{@conn.request_path}"
-            }
-          />
+          <div class="pb-4">
+            <.record_by_date_overview
+              circuit_country={circuit.country}
+              circuit_region={circuit.region}
+              circuit_name={circuit.name}
+              car_name={car.name}
+              car_class={car.class}
+              car_sub_class={car.sub_class}
+            />
+            <.grouped_records
+              records={records}
+              add_new_record_link={
+                ~p"/games/#{@game.code}/records/new?date=#{date |> Date.to_string()}&circuit=#{circuit.id}&car=#{car.id}&redirect_to=#{@conn.request_path}"
+              }
+            />
+          </div>
         <% end %>
       <% else %>
-        <p><%= RacingLeaderboardsWeb.DateUtils.parse(date) %></p>
         <.link
           href={
             ~p"/games/#{@game.code}/records/new?date=#{date |> Date.to_string()}&redirect_to=#{@conn.request_path}"
@@ -47,21 +50,4 @@
   <% end %>
 </div>
 
-<%!-- <%= if not Enum.empty?(@grouped_records) do %>
-  <%= for {{date, circuit, car}, records} <- @grouped_records do %>
-    <.grouped_records
-      records={records}
-      record_click={
-        fn {record, _id} -> JS.navigate("/games/#{@game.code}/records/#{record.id}") end
-      }
-      add_new_record_link={
-        ~p"/games/#{@game.code}/records/new?date=#{date |> Date.to_string()}&circuit=#{circuit.id}&car=#{car.id}&redirect_to=#{@conn.request_path}"
-      }
-    />
-  <% end %>
-<% else %>
-  <p>No records found for this week—Be the first to add one!</p>
-  <.link href={~p"/games/#{@game.code}/records/new?redirect_to=#{@conn.request_path}"} class="cta">
-    Add record
-  </.link>
-<% end %> --%>
+<.back navigate={~p"/games/#{@game.code}"}>Back to <%= @game.name %></.back>

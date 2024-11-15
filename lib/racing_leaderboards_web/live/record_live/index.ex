@@ -7,7 +7,7 @@ defmodule RacingLeaderboardsWeb.RecordLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    records = Records.list_records()
+    records = Records.list_records(%{limit: 2})
 
     {:ok,
      socket
@@ -16,6 +16,7 @@ defmodule RacingLeaderboardsWeb.RecordLive.Index do
 
   @impl true
   def handle_params(params, _url, socket) do
+    today = NaiveDateTime.local_now() |> NaiveDateTime.to_date()
     game = Games.get_game_by_code!(params["game_code"])
 
     {:noreply,
@@ -28,7 +29,10 @@ defmodule RacingLeaderboardsWeb.RecordLive.Index do
        car_id: params["car"],
        redirect_to: params["redirect_to"]
      )
-     |> apply_action(socket.assigns.live_action, params)}
+     |> apply_action(socket.assigns.live_action, params)
+     |> assign_new(:form, fn ->
+       to_form(%{"date" => today})
+     end)}
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
@@ -60,5 +64,11 @@ defmodule RacingLeaderboardsWeb.RecordLive.Index do
     {:ok, _} = Records.delete_record(record)
 
     {:noreply, stream_delete(socket, :records, record)}
+  end
+
+  @impl true
+  def handle_event("search", %{"date" => date}, socket) do
+    {:noreply,
+     socket |> push_navigate(to: ~p"/games/#{socket.assigns.game.code}/records/date/#{date}")}
   end
 end

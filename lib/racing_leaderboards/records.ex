@@ -18,7 +18,7 @@ defmodule RacingLeaderboards.Records do
 
   """
   def list_records do
-    Repo.all(Record)
+    Repo.all(from(Record, order_by: [desc: :date]))
     |> Repo.preload([:user, [circuit: :game], :car])
   end
 

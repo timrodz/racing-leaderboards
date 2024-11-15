@@ -7,8 +7,6 @@ defmodule RacingLeaderboardsWeb.ExtendedCoreComponents do
 
   use Gettext, backend: RacingLeaderboardsWeb.Gettext
 
-  attr(:date, :string, required: true)
-
   attr(:circuit_country, :string, required: true)
   attr(:circuit_region, :string, required: true)
   attr(:circuit_name, :string, required: true)
@@ -19,31 +17,38 @@ defmodule RacingLeaderboardsWeb.ExtendedCoreComponents do
 
   def record_by_date_overview(assigns) do
     ~H"""
-    <h3 class="font-semibold"><%= RacingLeaderboardsWeb.DateUtils.parse(@date) %></h3>
-    <div>
-      <h3 class="font-semibold">Circuit</h3>
-      <p>
-        <%= if @circuit_country do %>
-          <%= @circuit_country %>
-          <%= RacingLeaderboardsWeb.Utils.Circuits.country_to_emoji(@circuit_country) %>
-        <% else %>
-          <%= @circuit_region %>
-        <% end %>
-      </p>
-      <p><%= @circuit_name %></p>
-    </div>
-    <div>
-      <h3 class="font-semibold">Car</h3>
-      <p>
-        <%= @car_name %>
-        <span class="bg-slate-700 rounded px-2 py-1 text-white">
-          <%= if @car_sub_class do %>
-            <%= @car_class %> / <%= @car_sub_class %>
-          <% else %>
-            <%= @car_class %>
-          <% end %>
-        </span>
-      </p>
+    <div class="space-y-2">
+      <div>
+        <h3 class="font-semibold">Circuit</h3>
+        <ul>
+          <li>
+            <p>
+              <%= if @circuit_country do %>
+                <%= @circuit_country %>
+                <%= RacingLeaderboardsWeb.Utils.Circuits.country_to_emoji(@circuit_country) %>
+              <% else %>
+                <%= @circuit_region %>
+              <% end %>
+            </p>
+          </li>
+          <li>
+            <p><%= @circuit_name %></p>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold">Car</h3>
+        <p>
+          <%= @car_name %>
+          <span class="bg-slate-700 rounded px-2 py-1 text-white">
+            <%= if @car_sub_class do %>
+              <%= @car_class %> / <%= @car_sub_class %>
+            <% else %>
+              <%= @car_class %>
+            <% end %>
+          </span>
+        </p>
+      </div>
     </div>
     """
   end
@@ -54,21 +59,23 @@ defmodule RacingLeaderboardsWeb.ExtendedCoreComponents do
 
   def grouped_records(assigns) do
     ~H"""
-    <.table id="records" rows={@records |> Enum.with_index()} row_click={@record_click}>
-      <:col :let={{_record, index}} label="#"><%= index + 1 %></:col>
-      <:col :let={{record, index}} label="User">
-        <span>
-          <%= if index == 0, do: "🏆" %>
-          <%= record.user.name %>
-        </span>
-      </:col>
-      <:col :let={{record, _index}} label="Time">
-        <%= record.time %>
-        <%= if record.is_dnf do %>
-          <span class="bg-red-600 rounded text-white px-1 py-0.5">DNF</span>
-        <% end %>
-      </:col>
-    </.table>
+    <div class="px-2">
+      <.table id="records" rows={@records |> Enum.with_index()} row_click={@record_click}>
+        <:col :let={{_record, index}} label="#"><%= index + 1 %></:col>
+        <:col :let={{record, index}} label="User">
+          <span>
+            <%= if index == 0, do: "🏆" %>
+            <%= record.user.name %>
+          </span>
+        </:col>
+        <:col :let={{record, _index}} label="Time">
+          <%= record.time %>
+          <%= if record.is_dnf do %>
+            <span class="bg-red-600 rounded text-white px-1 py-0.5">DNF</span>
+          <% end %>
+        </:col>
+      </.table>
+    </div>
     <.link href={@add_new_record_link} class="cta mt-2">
       Add record
     </.link>

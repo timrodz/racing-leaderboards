@@ -23,7 +23,7 @@ defmodule RacingLeaderboards.Repo.Migrations.PopulateGames do
         code: "wrc-24",
         name: "EA SPORTS™ WRC 24",
         url: "https://www.ea.com/games/ea-sports-wrc/wrc-24",
-        image_url: "thumbnails/wrc-24.png",
+        image_url: "thumbnails/wrc-24.jpg",
         inserted_at: now,
         updated_at: now
       }

@@ -1,5 +1,5 @@
 <.header>
-  <%= @game.name %> / Daily Challenge
+  <%= @game.name %> / <%= @date_parsed %>
   <:actions>
     <.link href={~p"/games/#{@game.code}"} class="cta-yellow">
       Game page
@@ -11,35 +11,37 @@
   <img src={"/images/#{@game.image_url}"} alt={@game.code} class="w-full rounded" />
 </div>
 
-<%= if not Enum.empty?(@grouped_records) do %>
-  <%= for {{circuit, car}, records} <- @grouped_records do %>
-    <.grouped_records
-      records={records}
-      record_click={
-        fn {record, _id} -> JS.navigate("/games/#{@game.code}/records/#{record.id}") end
-      }
-      add_new_record_link={
-        ~p"/games/#{@game.code}/records/new?date=#{@date}&circuit=#{circuit.id}&car=#{car.id}&redirect_to=#{@conn.request_path}"
-      }
-      date={@date}
-      circuit_id={circuit.id}
-      circuit_country={circuit.country}
-      circuit_region={circuit.region}
-      circuit_name={circuit.name}
-      car_id={car.id}
-      car_name={car.name}
-      car_class={car.class}
-      game_code={@game.code}
-      car_sub_class={car.sub_class}
-      request_path={@conn.request_path}
-    />
-  <% end %>
-<% else %>
-  <p>No records found for this date—Be the first to add one!</p>
-  <.link
-    href={~p"/games/#{@game.code}/records/new?date=#{@date}&redirect_to=#{@conn.request_path}"}
-    class="cta"
-  >
-    Add record
-  </.link>
-<% end %>
+<div class="space-y-4">
+  <div class="card">
+    <%= if not Enum.empty?(@grouped_records) do %>
+      <%= for {{circuit, car}, records} <- @grouped_records do %>
+        <div class="pb-4">
+          <.record_by_date_overview
+            circuit_country={circuit.country}
+            circuit_region={circuit.region}
+            circuit_name={circuit.name}
+            car_name={car.name}
+            car_class={car.class}
+            car_sub_class={car.sub_class}
+          />
+          <.grouped_records
+            records={records}
+            add_new_record_link={
+              ~p"/games/#{@game.code}/records/new?date=#{@date |> Date.to_string()}&circuit=#{circuit.id}&car=#{car.id}&redirect_to=#{@conn.request_path}"
+            }
+          />
+        </div>
+      <% end %>
+    <% else %>
+      <p>No records found for this date—Be the first to add one!</p>
+      <.link
+        href={
+          ~p"/games/#{@game.code}/records/new?date=#{@date}&redirect_to=#{@conn.request_path}"
+        }
+        class="cta"
+      >
+        Add record
+      </.link>
+    <% end %>
+  </div>
+</div>
