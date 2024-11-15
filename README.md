@@ -16,3 +16,10 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+## Bootstrap the database
+
+```shell
+su - postgres
+createdb -E UTF8 racing_leaderboards -l en_US.UTF-8 -T template0
+```
