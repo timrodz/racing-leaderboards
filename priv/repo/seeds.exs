@@ -1,16 +1,7 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     RacingLeaderboards.Repo.insert!(%RacingLeaderboards.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+# mix run priv/repo/seeds.exs
 
 import Ecto.Multi
+import Ecto.Query
 import Ecto.Migration
 
 alias RacingLeaderboards.Users.User
@@ -19,7 +10,7 @@ alias RacingLeaderboards.Games.Game
 alias RacingLeaderboards.Games
 alias RacingLeaderboards.Repo
 
-now = DateTime.utc_now() |> DateTime.truncate(:second) |> IO.inspect(label: "time now")
+now = DateTime.utc_now() |> DateTime.truncate(:second)
 
 user_names =
   [
@@ -32,8 +23,3 @@ user_names =
       updated_at: now
     }
   end)
-
-inserted_games =
-  Ecto.Multi.new()
-  |> Ecto.Multi.insert_all(:insert_all, User, user_names)
-  |> Repo.transaction()
