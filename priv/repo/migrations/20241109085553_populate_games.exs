@@ -7,7 +7,7 @@ defmodule RacingLeaderboards.Repo.Migrations.PopulateGames do
   alias RacingLeaderboards.Repo
 
   def up do
-    now = DateTime.utc_now() |> DateTime.truncate(:second) |> IO.inspect(label: "time now")
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
 
     Ecto.Multi.new()
     |> Ecto.Multi.insert_all(:insert_all_games, Game, [
