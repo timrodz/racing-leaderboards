@@ -31,7 +31,7 @@
             <.grouped_records
               records={records}
               record_click={
-                fn {_id, record} ->
+                fn {record, _id} ->
                   JS.navigate(
                     ~p"/games/#{@game.code}/records/#{record}?redirect_to=#{@conn.request_path}"
                   )
