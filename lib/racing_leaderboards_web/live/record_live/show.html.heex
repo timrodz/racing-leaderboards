@@ -36,7 +36,13 @@
   :if={@live_action == :edit}
   id="record-modal"
   show
-  on_cancel={JS.patch(~p"/games/#{@game.code}/records/#{@record}")}
+  on_cancel={JS.patch(
+    <%= if @redirect_to do %>
+      ~p"/games/#{@game.code}/records/#{@record}?redirect_to=#{@conn.request_path}"
+    <% else %>
+      ~p"/games/#{@game.code}/records/#{@record}"
+    <% end %>
+    )}
 >
   <.live_component
     module={RacingLeaderboardsWeb.RecordLive.FormComponent}
@@ -51,6 +57,12 @@
     circuit_id={nil}
     car_id={nil}
     redirect_to={nil}
-    patch={~p"/games/#{@game.code}/records/#{@record}"}
+    patch={
+      <%= if @redirect_to do %>
+        ~p"/games/#{@game.code}/records/#{@record}?redirect_to=#{@conn.request_path}"
+      <% else %>
+        ~p"/games/#{@game.code}/records/#{@record}"
+      <% end %>
+    }
   />
 </.modal>

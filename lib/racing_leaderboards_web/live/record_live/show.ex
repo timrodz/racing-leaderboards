@@ -28,9 +28,22 @@ defmodule RacingLeaderboardsWeb.RecordLive.Show do
     record = Records.get_record!(id)
     {:ok, _} = Records.delete_record(record)
 
-    {:noreply,
-     socket
-     |> put_flash(:info, "Record deleted successfully")
-     |> push_patch(to: ~p"/games/#{socket.assigns.game_code}/records")}
+    redirect_to(socket)
+  end
+
+  defp redirect_to(socket) do
+    case socket.assigns.redirect_to do
+      nil ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Record deleted successfully")
+         |> push_patch(to: ~p"/games/#{socket.assigns.game.code}/records")}
+
+      _ ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Record deleted successfully")
+         |> push_navigate(to: socket.assigns.redirect_to, replace: true)}
+    end
   end
 end
