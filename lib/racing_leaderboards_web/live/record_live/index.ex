@@ -7,7 +7,7 @@ defmodule RacingLeaderboardsWeb.RecordLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    records = Records.list_records(%{limit: 2})
+    records = Records.list_records()
 
     {:ok,
      socket

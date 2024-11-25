@@ -26,6 +26,13 @@
           />
           <.grouped_records
             records={records}
+            record_click={
+              fn {record, _id} ->
+                JS.navigate(
+                  ~p"/games/#{@game.code}/records/#{record}?redirect_to=#{@conn.request_path}"
+                )
+              end
+            }
             add_new_record_link={
               ~p"/games/#{@game.code}/records/new?date=#{@date |> Date.to_string()}&circuit=#{circuit.id}&car=#{car.id}&redirect_to=#{@conn.request_path}"
             }

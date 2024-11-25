@@ -10,13 +10,13 @@ defmodule RacingLeaderboardsWeb.RecordLive.Show do
   end
 
   @impl true
-  def handle_params(%{"game_code" => game_code, "id" => id}, _, socket) do
+  def handle_params(%{"game_code" => game_code, "id" => id} = params, _, socket) do
     game = Games.get_game_by_code!(game_code)
 
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:game, game)
+     |> assign(game: game, redirect_to: params["redirect_to"])
      |> assign(:record, Records.get_record!(id))}
   end
 

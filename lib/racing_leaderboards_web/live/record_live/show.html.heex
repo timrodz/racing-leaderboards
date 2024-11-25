@@ -26,7 +26,11 @@
   <:item title="DNF (Did not finish)"><%= @record.is_dnf %></:item>
 </.list>
 
-<.back navigate={~p"/games/#{@game.code}/records"}>Back to records</.back>
+<%= if @redirect_to do %>
+  <.back navigate={@redirect_to}>Back</.back>
+<% else %>
+  <.back navigate={~p"/games/#{@game.code}/records"}>Back to records</.back>
+<% end %>
 
 <.modal
   :if={@live_action == :edit}
