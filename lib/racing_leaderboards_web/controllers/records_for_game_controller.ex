@@ -1,8 +1,9 @@
 defmodule RacingLeaderboardsWeb.RecordsForGameController do
+  use RacingLeaderboardsWeb, :controller
+
   alias RacingLeaderboardsWeb.DateUtils
   alias RacingLeaderboards.Records
   alias RacingLeaderboards.Games
-  use RacingLeaderboardsWeb, :controller
 
   def by_date(conn, %{"date" => date, "game_code" => game_code}) do
     dt = DateUtils.parse(Date.from_iso8601!(date))

@@ -18,6 +18,7 @@ defmodule RacingLeaderboardsWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/changelog", ChangelogController, :home
 
     # USERS
     live "/users", UserLive.Index, :index
