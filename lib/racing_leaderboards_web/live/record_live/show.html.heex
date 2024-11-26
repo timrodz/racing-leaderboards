@@ -21,8 +21,8 @@
 
 <.list>
   <:item title="User"><%= @record.user.name %></:item>
-  <:item title="Time"><%= @record.time %></:item>
-  <:item title="Date"><%= @record.date %></:item>
+  <:item title="Time"><%= RacingLeaderboardsWeb.DateUtils.parse_time(@record.time) %></:item>
+  <:item title="Date"><%= RacingLeaderboardsWeb.DateUtils.parse(@record.date) %></:item>
   <:item title="DNF (Did not finish)"><%= @record.is_dnf %></:item>
 </.list>
 

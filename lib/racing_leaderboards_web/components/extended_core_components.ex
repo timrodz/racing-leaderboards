@@ -69,7 +69,7 @@ defmodule RacingLeaderboardsWeb.ExtendedCoreComponents do
           </span>
         </:col>
         <:col :let={{record, _index}} label="Time">
-          <%= record.time %>
+          <%= RacingLeaderboardsWeb.DateUtils.parse_time(record.time) %>
           <%= if record.is_dnf do %>
             <span class="bg-red-600 rounded text-white px-1 py-0.5">DNF</span>
           <% end %>

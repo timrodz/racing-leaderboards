@@ -44,7 +44,12 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
           options={@users}
           value={@selected_user_id}
         />
-        <.input field={@form[:time]} type="text" label="Time (mm:ss)" placeholder="2:18.813" />
+        <.input
+          field={@form[:time]}
+          type="text"
+          label="Time (mm:ss) i.e. 09:35.123"
+          placeholder="02:18.813"
+        />
         <.input field={@form[:is_dnf]} type="checkbox" label="DNF (Did not finish)" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Record</.button>

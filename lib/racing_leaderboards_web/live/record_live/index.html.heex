@@ -28,9 +28,11 @@
   <:col :let={{_id, record}} label="Circuit"><%= record.circuit.name %></:col>
   <:col :let={{_id, record}} label="Car"><%= record.car.name %></:col>
   <:col :let={{_id, record}} label="User"><%= record.user.name %></:col>
-  <:col :let={{_id, record}} label="Date"><%= record.date %></:col>
+  <:col :let={{_id, record}} label="Date">
+    <%= RacingLeaderboardsWeb.DateUtils.parse(record.date) %>
+  </:col>
   <:col :let={{_id, record}} label="Time">
-    <%= record.time %>
+    <%= RacingLeaderboardsWeb.DateUtils.parse_time(record.time) %>
     <%= if record.is_dnf do %>
       <span class="bg-red-600 rounded text-white px-1 py-0.5">DNF</span>
     <% end %>
