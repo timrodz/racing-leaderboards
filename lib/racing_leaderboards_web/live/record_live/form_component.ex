@@ -59,15 +59,6 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
     """
   end
 
-  defp circuit_to_select(circuit) do
-    {"#{if circuit.country != "", do: "#{CircuitUtils.country_to_emoji(circuit.country)} #{circuit.country}", else: "#{circuit.region}"} / #{circuit.name}",
-     circuit.id}
-  end
-
-  defp car_to_select(car) do
-    {"#{car.class} - #{car.sub_class} / #{car.name}", car.id}
-  end
-
   @impl true
   def update(
         %{
@@ -145,7 +136,7 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
        selected_circuit_id: selected_circuit_id,
        selected_car_id: selected_car_id,
        selected_date_id: selected_date_id,
-       is_redirect?: not is_nil(redirect_to)
+       redirect_to: redirect_to
      )
      |> assign_new(:form, fn ->
        to_form(
@@ -202,7 +193,7 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
       {:ok, record} ->
         notify_parent({:saved, record})
 
-        redirect_to(socket)
+        redirect_to(socket, :edit)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, form: to_form(changeset))}
@@ -214,29 +205,45 @@ defmodule RacingLeaderboardsWeb.RecordLive.FormComponent do
       {:ok, record} ->
         notify_parent({:saved, record})
 
-        redirect_to(socket)
+        redirect_to(socket, :new)
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        IO.puts("ERROR")
         {:noreply, assign(socket, form: to_form(changeset))}
     end
   end
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 
-  defp redirect_to(socket) do
+  defp redirect_to(socket, action) do
+    IO.inspect(socket.assigns.redirect_to, label: "REDIRECT TO")
+
+    message =
+      case action do
+        :new -> "Record created successfully"
+        :edit -> "Record updated successfully"
+      end
+
     case socket.assigns.redirect_to do
       nil ->
         {:noreply,
          socket
-         |> put_flash(:info, "Record created successfully")
+         |> put_flash(:info, message)
          |> push_patch(to: socket.assigns.patch)}
 
       _ ->
         {:noreply,
          socket
-         |> put_flash(:info, "Record created successfully")
+         |> put_flash(:info, message)
          |> push_navigate(to: socket.assigns.redirect_to, replace: true)}
     end
+  end
+
+  defp circuit_to_select(circuit) do
+    {"#{if circuit.country != "", do: "#{CircuitUtils.country_to_emoji(circuit.country)} #{circuit.country}", else: "#{circuit.region}"} / #{circuit.name}",
+     circuit.id}
+  end
+
+  defp car_to_select(car) do
+    {"#{car.class} - #{car.sub_class} / #{car.name}", car.id}
   end
 end

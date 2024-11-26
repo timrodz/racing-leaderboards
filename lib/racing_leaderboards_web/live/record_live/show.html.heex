@@ -3,7 +3,13 @@
   <:subtitle>This is a record record from your database.</:subtitle>
   <:actions>
     <.link
-      patch={~p"/games/#{@game.code}/records/#{@record}/show/edit"}
+      patch={
+        if @redirect_to do
+          ~p"/games/#{@game.code}/records/#{@record}/show/edit?redirect_to=#{@redirect_to}"
+        else
+          ~p"/games/#{@game.code}/records/#{@record}/show/edit"
+        end
+      }
       phx-click={JS.push_focus()}
       class="cta"
     >
@@ -36,13 +42,7 @@
   :if={@live_action == :edit}
   id="record-modal"
   show
-  on_cancel={JS.patch(
-    <%= if @redirect_to do %>
-      ~p"/games/#{@game.code}/records/#{@record}?redirect_to=#{@conn.request_path}"
-    <% else %>
-      ~p"/games/#{@game.code}/records/#{@record}"
-    <% end %>
-    )}
+  on_cancel={JS.patch(~p"/games/#{@game.code}/records/#{@record}")}
 >
   <.live_component
     module={RacingLeaderboardsWeb.RecordLive.FormComponent}
@@ -52,17 +52,11 @@
     record={@record}
     game_id={@game.id}
     game_name={@game.name}
-    date={nil}
-    user_id={nil}
-    circuit_id={nil}
-    car_id={nil}
-    redirect_to={nil}
-    patch={
-      <%= if @redirect_to do %>
-        ~p"/games/#{@game.code}/records/#{@record}?redirect_to=#{@conn.request_path}"
-      <% else %>
-        ~p"/games/#{@game.code}/records/#{@record}"
-      <% end %>
-    }
+    date={@record.date}
+    user_id={@record.user_id}
+    circuit_id={@record.circuit_id}
+    car_id={@record.car_id}
+    redirect_to={@redirect_to}
+    patch={~p"/games/#{@game.code}/records/#{@record}"}
   />
 </.modal>
