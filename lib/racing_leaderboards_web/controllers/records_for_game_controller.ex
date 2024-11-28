@@ -34,74 +34,90 @@ defmodule RacingLeaderboardsWeb.RecordsForGameController do
   end
 
   defp get_records_for_date(date_string, game_code, page_title) do
+    date =
+      case Date.from_iso8601(date_string) do
+        {:ok, parsed_date} -> parsed_date
+        _ -> NaiveDateTime.local_now() |> NaiveDateTime.to_date()
+      end
+
     game =
       Games.get_game_by_code!(game_code)
 
     records =
       Records.list_records_by_game_date(game.id, date_string)
 
-    grouped_records =
-      records
-      |> Enum.group_by(&{&1.circuit, &1.car})
+    %{
+      page_title: page_title,
+      game: game,
+      date: date,
+      records: process_records(records)
+    }
+  end
 
+  defp get_records_for_week(date_string, game_code, page_title) do
     date =
       case Date.from_iso8601(date_string) do
         {:ok, parsed_date} -> parsed_date
         _ -> NaiveDateTime.local_now() |> NaiveDateTime.to_date()
       end
 
-    %{
-      page_title: page_title,
-      game: game,
-      date: date,
-      date_parsed: DateUtils.parse(date),
-      grouped_records: grouped_records
-    }
-  end
-
-  defp get_records_for_week(date_string, game_code, page_title) do
     game =
       Games.get_game_by_code!(game_code)
 
     records = Records.list_records_by_game_week(game.id, date_string)
 
-    # I'm creating an iterator between the start of the week and the end of the week
-    # I'm then iterating over the records and grouping them by date
-    # This is so that I can show entries on the weekly page and users can directly add to it
-
-    date =
-      case Date.from_iso8601(date_string) do
-        {:ok, parsed_date} -> parsed_date
-        _ -> NaiveDateTime.local_now() |> NaiveDateTime.to_date()
-      end
-
-    start_of_week = Date.beginning_of_week(date)
-    end_of_week = Date.end_of_week(date)
-
     # iterate between start_of_week and finish at end_of_week
-    records_by_date =
-      records
-      |> Enum.group_by(& &1.date)
+    # And map records to every date, even if there aren't any records
+    records_by_date = records |> Enum.group_by(& &1.date)
 
-    iterated_dates =
-      Date.range(start_of_week, end_of_week)
-      |> Enum.map(fn day ->
-        case records_by_date
-             |> Map.get(day) do
+    grouped_records_by_date =
+      Date.range(Date.beginning_of_week(date), Date.end_of_week(date))
+      |> Enum.map(fn range_date ->
+        case records_by_date |> Map.get(range_date) do
           nil ->
-            IO.puts("NO ENTRY FOR #{day}")
-            {day, nil}
+            {range_date, nil}
 
-          r ->
-            IO.puts("YES ENTRY FOR #{day}")
-            {day, r |> Enum.group_by(&{&1.circuit, &1.car})}
+          records ->
+            {range_date, process_records(records)}
         end
       end)
 
     %{
       page_title: page_title,
       game: game,
-      iterated_dates: iterated_dates
+      records: grouped_records_by_date
     }
+  end
+
+  # Maps records by circuit and car, and then calculate diff times
+  defp process_records(records) do
+    fastest_time =
+      case length(records) do
+        0 -> Time.from_iso8601!("00:00:00.000")
+        _ -> records |> Enum.min_by(& &1.time) |> Map.get(:time)
+      end
+
+    records
+    |> Enum.group_by(&{&1.circuit, &1.car})
+    |> Enum.map(fn {{circuit, car}, records} ->
+      {
+        {circuit, car},
+        records |> Enum.map(&enrich_record(&1, fastest_time))
+      }
+    end)
+  end
+
+  # Adds a diff_time field to the record
+  defp enrich_record(record, fastest_time) do
+    diff = Time.diff(record.time, fastest_time, :millisecond)
+
+    case diff do
+      0 ->
+        record |> Map.put(:diff_time, nil)
+
+      _ ->
+        diff_time = Time.from_iso8601!("00:00:00.000") |> Time.add(diff, :millisecond)
+        record |> Map.put(:diff_time, diff_time)
+    end
   end
 end

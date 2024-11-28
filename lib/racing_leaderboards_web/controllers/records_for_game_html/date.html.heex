@@ -1,5 +1,5 @@
 <.header>
-  <%= @game.name %> / <%= @date_parsed %>
+  <%= @game.name %> / <%= RacingLeaderboardsWeb.DateUtils.parse(@date) %>
   <:actions>
     <.link href={~p"/games/#{@game.code}"} class="cta-yellow">
       Game page
@@ -13,8 +13,8 @@
 
 <div class="space-y-4">
   <div class="card">
-    <%= if not Enum.empty?(@grouped_records) do %>
-      <%= for {{circuit, car}, records} <- @grouped_records do %>
+    <%= if not Enum.empty?(@records) do %>
+      <%= for {{circuit, car}, records} <- @records do %>
         <div class="pb-4">
           <.record_by_date_overview
             circuit_country={circuit.country}

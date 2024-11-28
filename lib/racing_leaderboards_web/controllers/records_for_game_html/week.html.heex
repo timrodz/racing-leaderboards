@@ -12,7 +12,7 @@
 </div>
 
 <div class="space-y-2">
-  <%= for {date, grouped_records} <- @iterated_dates do %>
+  <%= for {date, grouped_records} <- @records do %>
     <div class="card">
       <h3 class="font-bold tracking-wide uppercase">
         <%= RacingLeaderboardsWeb.DateUtils.parse(date) %>

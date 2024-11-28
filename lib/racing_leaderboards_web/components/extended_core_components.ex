@@ -74,6 +74,13 @@ defmodule RacingLeaderboardsWeb.ExtendedCoreComponents do
             <span class="bg-red-600 rounded text-white px-1 py-0.5">DNF</span>
           <% end %>
         </:col>
+        <:col :let={{record, _index}} label="Diff">
+          <%= if not is_nil(record.diff_time) do %>
+            <span class="text-red-600">
+              +<%= RacingLeaderboardsWeb.DateUtils.parse_time(record.diff_time) %>
+            </span>
+          <% end %>
+        </:col>
       </.table>
     </div>
     <.link href={@add_new_record_link} class="cta mt-2">

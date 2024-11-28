@@ -23,18 +23,6 @@ defmodule RacingLeaderboardsWeb.DateUtils do
   end
 
   def parse_time(time) do
-    hours = time.hour |> Integer.to_string() |> String.pad_leading(2, "0")
-    minutes = time.minute |> Integer.to_string() |> String.pad_leading(2, "0")
-    seconds = time.second |> Integer.to_string() |> String.pad_leading(2, "0")
-
-    {ms, _precision} = time.microsecond
-
-    miliseconds =
-      "#{ms |> Integer.to_string() |> String.pad_trailing(2, "0") |> String.slice(0, 3)}"
-
-    case time.hour == 0 do
-      true -> "#{minutes}:#{seconds}.#{miliseconds}"
-      false -> "#{hours}:#{minutes}:#{seconds}.#{miliseconds}"
-    end
+    time |> Time.truncate(:millisecond) |> Time.to_iso8601()
   end
 end
