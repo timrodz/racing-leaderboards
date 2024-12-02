@@ -93,8 +93,11 @@ defmodule RacingLeaderboardsWeb.RecordsForGameController do
   defp process_records(records) do
     fastest_time =
       case length(records) do
-        0 -> Time.from_iso8601!("00:00:00.000")
-        _ -> records |> Enum.min_by(& &1.time) |> Map.get(:time)
+        0 ->
+          Time.from_iso8601!("00:00:00.000")
+
+        _ ->
+          records |> Enum.min_by(& &1.time, Time) |> Map.get(:time)
       end
 
     records

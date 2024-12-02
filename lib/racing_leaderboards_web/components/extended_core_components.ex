@@ -77,7 +77,7 @@ defmodule RacingLeaderboardsWeb.ExtendedCoreComponents do
         <:col :let={{record, _index}} label="Diff">
           <%= if not is_nil(record.diff_time) do %>
             <span class="text-red-600">
-              +<%= RacingLeaderboardsWeb.DateUtils.parse_time(record.diff_time) %>
+              <%= RacingLeaderboardsWeb.DateUtils.parse_time_diff(record.diff_time) %>
             </span>
           <% end %>
         </:col>

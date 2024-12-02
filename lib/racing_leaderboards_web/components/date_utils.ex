@@ -25,4 +25,12 @@ defmodule RacingLeaderboardsWeb.DateUtils do
   def parse_time(time) do
     time |> Time.truncate(:millisecond) |> Time.to_iso8601()
   end
+
+  def parse_time_diff(time) do
+    time_string = time |> Time.truncate(:millisecond) |> Time.to_iso8601()
+
+    [hour, minutes, seconds] = String.split(time_string, ":")
+
+    "+#{if hour == "00", do: nil, else: "#{hour}:"}#{minutes}:#{seconds}"
+  end
 end
