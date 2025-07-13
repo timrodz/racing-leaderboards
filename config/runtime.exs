@@ -21,12 +21,13 @@ if System.get_env("PHX_SERVER") do
 end
 
 if config_env() == :prod do
-  database_url =
-    System.get_env("DATABASE_URL") ||
-      raise """
-      environment variable DATABASE_URL is missing.
-      For example: ecto://USER:PASS@HOST/DATABASE
-      """
+  username = System.get_env("POSTGRES_USER")
+  password = System.get_env("POSTGRES_PASSWORD")
+  hostname = System.get_env("POSTGRES_HOST")
+  port = System.get_env("POSTGRES_PORT")
+  database = System.get_env("POSTGRES_DB")
+
+  database_url = "ecto://#{username}:#{password}@#{hostname}:#{port}/#{database}"
 
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
@@ -49,7 +50,7 @@ if config_env() == :prod do
       """
 
   host = System.get_env("PHX_HOST") || "example.com"
-  port = String.to_integer(System.get_env("PORT") || "4000")
+  port = String.to_integer(System.get_env("APP_PORT") || "4000")
 
   config :racing_leaderboards, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 

@@ -2,10 +2,10 @@ import Config
 
 # Configure your database
 config :racing_leaderboards, RacingLeaderboards.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "racing_leaderboards_dev",
+  username: System.get_env("DB_USERNAME"),
+  password: System.get_env("DB_PASSWORD"),
+  hostname: System.get_env("DB_HOSTNAME"),
+  database: System.get_env("DB_NAME"),
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -19,11 +19,11 @@ config :racing_leaderboards, RacingLeaderboards.Repo,
 config :racing_leaderboards, RacingLeaderboardsWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {127, 0, 0, 1}, port: 4000],
+  http: [ip: {127, 0, 0, 1}, port: System.get_env("APP_PORT")],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "ErGko/UPsssi+2sJr8PAFa9UuHahGS3gZX6JpLjUoAQjifaxlKPvpXOta6fZmAXo",
+  secret_key_base: System.get_env("SECRET_KEY_BASE"),
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:racing_leaderboards, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:racing_leaderboards, ~w(--watch)]}
