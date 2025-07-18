@@ -33,6 +33,31 @@ defmodule RacingLeaderboardsWeb.RecordsForGameController do
     render(conn, "week.html", get_records_for_week(today, game_code, "Weekly challenge"))
   end
 
+  def weekly_stats(conn, %{"date" => date, "game_code" => game_code}) do
+    parsed_date =
+      case Date.from_iso8601(date) do
+        {:ok, parsed_date} -> parsed_date
+        _ -> NaiveDateTime.local_now() |> NaiveDateTime.to_date()
+      end
+
+    game = Games.get_game_by_code!(game_code)
+    
+    combinations = Records.get_fastest_records_by_game_week_combinations(game.id, date)
+    
+    processed_combinations =
+      combinations
+      |> Enum.map(fn {circuit, car, fastest_record, all_records} ->
+        {circuit, car, fastest_record, process_records(all_records)}
+      end)
+
+    render(conn, "weekly_stats.html", %{
+      page_title: "Weekly Stats for #{game.name} - Week of #{DateUtils.parse(parsed_date)}",
+      game: game,
+      date: parsed_date,
+      combinations: processed_combinations
+    })
+  end
+
   defp get_records_for_date(date_string, game_code, page_title) do
     date =
       case Date.from_iso8601(date_string) do

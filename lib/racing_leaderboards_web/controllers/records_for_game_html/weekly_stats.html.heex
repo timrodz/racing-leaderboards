@@ -1,0 +1,71 @@
+<.header>
+  <%= @game.name %> / Weekly Stats
+  <:actions>
+    <.link href={~p"/games/#{@game.code}"} class="cta-yellow">
+      Game page
+    </.link>
+  </:actions>
+</.header>
+
+<div class="my-6 space-y-2">
+  <img src={"/images/#{@game.image_url}"} alt={@game.code} class="w-full rounded" />
+</div>
+
+<div class="space-y-2">
+  <%= for {circuit, car, fastest_record, grouped_records} <- @combinations do %>
+    <div class="card">
+      <.record_by_date_overview
+        circuit_country={circuit.country}
+        circuit_region={circuit.region}
+        circuit_name={circuit.name}
+        car_name={car.name}
+        car_class={car.class}
+        car_sub_class={car.sub_class}
+      />
+      
+      <%= if fastest_record do %>
+        <div class="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded">
+          <h4 class="font-semibold text-yellow-800 mb-2">Fastest Driver This Week</h4>
+          <p class="text-yellow-700">
+            <span class="font-bold"><%= fastest_record.user.name %></span> 
+            - <%= fastest_record.time %>
+          </p>
+        </div>
+      <% end %>
+      
+      <%= if grouped_records && length(grouped_records) > 0 do %>
+        <div class="mt-4">
+          <h4 class="font-semibold mb-2">All Entries This Week</h4>
+          <%= for {{^circuit, ^car}, records} <- grouped_records do %>
+            <.grouped_records
+              records={records}
+              record_click={
+                fn {record, _id} ->
+                  JS.navigate(
+                    ~p"/games/#{@game.code}/records/#{record}?redirect_to=#{@conn.request_path}"
+                  )
+                end
+              }
+              add_new_record_link={
+                ~p"/games/#{@game.code}/records/new?circuit=#{circuit.id}&car=#{car.id}&redirect_to=#{@conn.request_path}"
+              }
+            />
+          <% end %>
+        </div>
+      <% else %>
+        <div class="mt-4">
+          <.link
+            href={
+              ~p"/games/#{@game.code}/records/new?circuit=#{circuit.id}&car=#{car.id}&redirect_to=#{@conn.request_path}"
+            }
+            class="cta"
+          >
+            Add record
+          </.link>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<.back navigate={~p"/games/#{@game.code}"}>Back to <%= @game.name %></.back>
