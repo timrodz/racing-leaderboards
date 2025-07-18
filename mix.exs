@@ -5,7 +5,7 @@ defmodule RacingLeaderboards.MixProject do
     [
       app: :racing_leaderboards,
       version: "0.2.0",
-      elixir: "~> 1.14",
+      elixir: "~> 1.15.6",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
