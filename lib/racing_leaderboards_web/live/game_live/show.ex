@@ -16,6 +16,7 @@ defmodule RacingLeaderboardsWeb.GameLive.Show do
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:game, Games.get_game_by_code!(code))
+     |> assign(:date, Date.to_string(today))
      |> assign_new(:form, fn ->
        to_form(%{"date" => today})
      end)}
