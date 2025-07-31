@@ -10,62 +10,165 @@
 <div class="my-6 space-y-2">
   <img src={"/images/#{@game.image_url}"} alt={@game.code} class="w-full rounded" />
 </div>
+<!-- Weekly Leaderboard -->
+<% # Group records by circuit and car combination
+grouped_records_by_combination =
+  @combinations
+  |> Enum.filter(fn {_circuit, _car, _fastest_record, grouped_records} ->
+    grouped_records != nil and length(grouped_records) > 0
+  end)
+  |> Enum.map(fn {circuit, car, _fastest_record, grouped_records} ->
+    all_records =
+      grouped_records
+      |> Enum.flat_map(fn {{^circuit, ^car}, records} -> records end)
 
-<div class="space-y-2">
-  <%= for {circuit, car, fastest_record, grouped_records} <- @combinations do %>
-    <div class="card">
-      <.record_by_date_overview
-        circuit_country={circuit.country}
-        circuit_region={circuit.region}
-        circuit_name={circuit.name}
-        car_name={car.name}
-        car_class={car.class}
-        car_sub_class={car.sub_class}
-      />
-      
-      <%= if fastest_record do %>
-        <div class="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded">
-          <h4 class="font-semibold text-yellow-800 mb-2">Fastest Driver This Week</h4>
-          <p class="text-yellow-700">
-            <span class="font-bold"><%= fastest_record.user.name %></span> 
-            - <%= fastest_record.time %>
-          </p>
+    # Separate finished records from DNFs
+    finished_records =
+      all_records
+      |> Enum.filter(fn record -> not record.is_dnf end)
+      |> Enum.sort_by(fn record -> record.time end)
+
+    dnf_records =
+      all_records
+      |> Enum.filter(fn record -> record.is_dnf end)
+      |> Enum.sort_by(fn record -> record.time end)
+
+    {circuit, car, finished_records, dnf_records}
+  end)
+  |> Enum.filter(fn {_circuit, _car, finished_records, dnf_records} ->
+    length(finished_records) > 0 or length(dnf_records) > 0
+  end) %>
+
+<%= if length(grouped_records_by_combination) > 0 do %>
+  <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-6 text-white mb-8">
+    <div class="flex items-center justify-center mb-6">
+      <span class="text-2xl">🏆</span>
+      <h2 class="text-2xl font-bold mx-3">LEADERBOARD</h2>
+      <span class="text-2xl">🏆</span>
+    </div>
+    <!-- Circuit/Car Combinations -->
+    <%= for {circuit, car, finished_records, dnf_records} <- grouped_records_by_combination do %>
+      <div class="mb-8">
+        <!-- Circuit and Car Info -->
+        <div class="mb-4 p-4 bg-blue-700 bg-opacity-50 rounded">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-lg font-bold">
+                <%= circuit.name %>
+                <%= if circuit.country do %>
+                  <%= RacingLeaderboardsWeb.Utils.Circuits.country_to_emoji(circuit.country) %>
+                <% else %>
+                  (<%= circuit.region %>)
+                <% end %>
+              </h3>
+              <p class="text-sm opacity-90">
+                <%= car.name %>
+                <span class="bg-blue-900 bg-opacity-60 rounded px-2 py-1 ml-2">
+                  <%= if car.sub_class do %>
+                    <%= car.class %> / <%= car.sub_class %>
+                  <% else %>
+                    <%= car.class %>
+                  <% end %>
+                </span>
+              </p>
+            </div>
+            <div class="text-right">
+              <.link
+                href={
+                  ~p"/games/#{@game.code}/records/new?circuit=#{circuit.id}&car=#{car.id}&redirect_to=#{@conn.request_path}"
+                }
+                class="bg-yellow-500 hover:bg-yellow-600 text-black px-3 py-1 rounded text-sm font-semibold"
+              >
+                Add Record
+              </.link>
+            </div>
+          </div>
         </div>
-      <% end %>
-      
-      <%= if grouped_records && length(grouped_records) > 0 do %>
-        <div class="mt-4">
-          <h4 class="font-semibold mb-2">All Entries This Week</h4>
-          <%= for {{^circuit, ^car}, records} <- grouped_records do %>
-            <.grouped_records
-              records={records}
-              record_click={
-                fn {record, _id} ->
+        <!-- Finished Records Section -->
+        <%= if length(finished_records) > 0 do %>
+          <!-- Table Headers -->
+          <div class="grid grid-cols-3 gap-4 text-sm font-semibold mb-2 px-4 py-2 bg-blue-700 bg-opacity-50 rounded">
+            <div class="text-center">RANKING</div>
+            <div>DRIVER NAME</div>
+            <div>TIME</div>
+          </div>
+          <!-- Finished Records -->
+          <%= for {record, index} <- Enum.with_index(finished_records, 1) do %>
+            <div
+              class="grid grid-cols-3 gap-4 items-center py-3 px-4 mb-1 bg-blue-700 bg-opacity-30 rounded hover:bg-blue-700 hover:bg-opacity-50 transition-colors cursor-pointer"
+              phx-click={
+                JS.navigate(
+                  ~p"/games/#{@game.code}/records/#{record}?redirect_to=#{@conn.request_path}"
+                )
+              }
+            >
+              <!-- Ranking -->
+              <div class="text-center">
+                <span class="bg-blue-900 bg-opacity-60 rounded px-3 py-1 font-bold text-lg">
+                  <%= String.pad_leading("#{index}", 2, "0") %>
+                </span>
+              </div>
+              <!-- Driver Name -->
+              <div class="font-semibold">
+                <%= record.user.name %>
+              </div>
+              <!-- Time -->
+              <div class="font-mono font-bold">
+                <%= RacingLeaderboardsWeb.DateUtils.parse_time(record.time) %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+        <!-- DNF Records Section -->
+        <%= if length(dnf_records) > 0 do %>
+          <div class="mt-6">
+            <!-- DNF Section Header -->
+            <div class="grid grid-cols-3 gap-4 text-sm font-semibold mb-2 px-4 py-2 bg-red-700 bg-opacity-50 rounded">
+              <div class="text-center">DNF</div>
+              <div>DRIVER NAME</div>
+              <div class="text-center">TIME</div>
+            </div>
+            <!-- DNF Records -->
+            <%= for record <- dnf_records do %>
+              <div
+                class="grid grid-cols-3 gap-4 items-center py-3 px-4 mb-1 bg-red-700 bg-opacity-20 rounded hover:bg-red-700 hover:bg-opacity-30 transition-colors cursor-pointer"
+                phx-click={
                   JS.navigate(
                     ~p"/games/#{@game.code}/records/#{record}?redirect_to=#{@conn.request_path}"
                   )
-                end
-              }
-              add_new_record_link={
-                ~p"/games/#{@game.code}/records/new?circuit=#{circuit.id}&car=#{car.id}&redirect_to=#{@conn.request_path}"
-              }
-            />
-          <% end %>
-        </div>
-      <% else %>
-        <div class="mt-4">
-          <.link
-            href={
-              ~p"/games/#{@game.code}/records/new?circuit=#{circuit.id}&car=#{car.id}&redirect_to=#{@conn.request_path}"
-            }
-            class="cta"
-          >
-            Add record
-          </.link>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
-</div>
+                }
+              >
+                <!-- DNF Badge -->
+                <div class="text-center">
+                  <span class="bg-red-600 rounded px-3 py-1 font-bold text-sm text-white">
+                    DNF
+                  </span>
+                </div>
+                <!-- Driver Name -->
+                <div class="font-semibold">
+                  <%= record.user.name %>
+                </div>
+                <!-- Time -->
+                <div class="text-center font-mono">
+                  <%= RacingLeaderboardsWeb.DateUtils.parse_time(record.time) %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="bg-gray-100 rounded-lg p-8 text-center">
+    <p class="text-gray-600 mb-4">No records found for this week.</p>
+    <.link
+      href={~p"/games/#{@game.code}/records/new?redirect_to=#{@conn.request_path}"}
+      class="cta"
+    >
+      Add the first record
+    </.link>
+  </div>
+<% end %>
 
 <.back navigate={~p"/games/#{@game.code}"}>Back to <%= @game.name %></.back>
