@@ -11,35 +11,7 @@
   <img src={"/images/#{@game.image_url}"} alt={@game.code} class="w-full rounded" />
 </div>
 <!-- Weekly Leaderboard -->
-<% # Group records by circuit and car combination
-grouped_records_by_combination =
-  @combinations
-  |> Enum.filter(fn {_circuit, _car, _fastest_record, grouped_records} ->
-    grouped_records != nil and length(grouped_records) > 0
-  end)
-  |> Enum.map(fn {circuit, car, _fastest_record, grouped_records} ->
-    all_records =
-      grouped_records
-      |> Enum.flat_map(fn {{^circuit, ^car}, records} -> records end)
-
-    # Separate finished records from DNFs
-    finished_records =
-      all_records
-      |> Enum.filter(fn record -> not record.is_dnf end)
-      |> Enum.sort_by(fn record -> record.time end)
-
-    dnf_records =
-      all_records
-      |> Enum.filter(fn record -> record.is_dnf end)
-      |> Enum.sort_by(fn record -> record.time end)
-
-    {circuit, car, finished_records, dnf_records}
-  end)
-  |> Enum.filter(fn {_circuit, _car, finished_records, dnf_records} ->
-    length(finished_records) > 0 or length(dnf_records) > 0
-  end) %>
-
-<%= if length(grouped_records_by_combination) > 0 do %>
+<%= if length(@grouped_records) > 0 do %>
   <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-6 text-white mb-8">
     <div class="flex items-center justify-center mb-6">
       <span class="text-2xl">🏆</span>
@@ -47,7 +19,7 @@ grouped_records_by_combination =
       <span class="text-2xl">🏆</span>
     </div>
     <!-- Circuit/Car Combinations -->
-    <%= for {circuit, car, finished_records, dnf_records} <- grouped_records_by_combination do %>
+    <%= for {circuit, car, finished_records, dnf_records} <- @grouped_records do %>
       <div class="mb-8">
         <!-- Circuit and Car Info -->
         <div class="mb-4 p-4 bg-blue-700 bg-opacity-50 rounded">
@@ -95,7 +67,7 @@ grouped_records_by_combination =
           <!-- Finished Records -->
           <%= for {record, index} <- Enum.with_index(finished_records, 1) do %>
             <div
-              class="grid grid-cols-3 gap-4 items-center py-3 px-4 mb-1 bg-blue-700 bg-opacity-30 rounded hover:bg-blue-700 hover:bg-opacity-50 transition-colors cursor-pointer"
+              class="grid grid-cols-3 gap-4 items-center py-3 px-4 mb-1 bg-blue-700 bg-opacity-30 rounded hover:bg-blue-700 hover:bg-opacity-50 transition-colors cursor-pointer border-2 border-blue-800"
               phx-click={
                 JS.navigate(
                   ~p"/games/#{@game.code}/records/#{record}?redirect_to=#{@conn.request_path}"
