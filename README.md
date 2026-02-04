@@ -1,4 +1,7 @@
-# RacingLeaderboards
+# Racing Leaderboards
+
+![Screenshot-2026-02-05-09 06 25](https://github.com/user-attachments/assets/47c7c039-27a6-406c-83b2-0f0ff2567a4c)
+
 
 To start your Phoenix server:
 
