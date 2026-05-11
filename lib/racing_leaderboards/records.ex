@@ -99,6 +99,28 @@ defmodule RacingLeaderboards.Records do
     |> Repo.preload([:user, :circuit, :car])
   end
 
+  def get_fastest_records_by_game_week_combinations(game_id, date_string) do
+    records = list_records_by_game_week(game_id, date_string)
+    
+    records
+    |> Enum.group_by(fn record -> {record.circuit_id, record.car_id} end)
+    |> Enum.map(fn {{_circuit_id, _car_id}, combination_records} ->
+      circuit = combination_records |> hd() |> Map.get(:circuit)
+      car = combination_records |> hd() |> Map.get(:car)
+      
+      fastest_record = 
+        combination_records
+        |> Enum.reject(& &1.is_dnf)
+        |> case do
+          [] -> nil
+          non_dnf_records -> Enum.min_by(non_dnf_records, & &1.time, Time)
+        end
+      
+      {circuit, car, fastest_record, combination_records}
+    end)
+    |> Enum.sort_by(fn {circuit, car, _, _} -> {circuit.name, car.name} end)
+  end
+
   @doc """
   Gets a single record.
 

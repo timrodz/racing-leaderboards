@@ -63,6 +63,7 @@ defmodule RacingLeaderboardsWeb.Router do
     # RECORDS BY DATE
     get "/games/:game_code/records/date/:date", RecordsForGameController, :by_date
     get "/games/:game_code/records/week/:date", RecordsForGameController, :by_week
+    get "/games/:game_code/stats/weekly/:date", RecordsForGameController, :weekly_stats
 
     get "/games/:game_code/challenge/daily", RecordsForGameController, :daily
     get "/games/:game_code/challenge/weekly", RecordsForGameController, :weekly

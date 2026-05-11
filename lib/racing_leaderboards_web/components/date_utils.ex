@@ -33,4 +33,11 @@ defmodule RacingLeaderboardsWeb.DateUtils do
 
     "+#{if hour == "00", do: nil, else: "#{hour}:"}#{minutes}:#{seconds}"
   end
+
+  def parse_week_range(date) do
+    week_start = Date.beginning_of_week(date)
+    week_end = Date.end_of_week(date)
+    
+    "Week of #{parse(week_start)} - #{parse(week_end)}"
+  end
 end
